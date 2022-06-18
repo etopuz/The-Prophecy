@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.;
 
 namespace TheProphecy.PlayerMovement
 {
@@ -11,8 +12,8 @@ namespace TheProphecy.PlayerMovement
         [Header("References")]
         [SerializeField] private Joystick _joystick;
         [SerializeField] private GameObject _center;
-        private Rigidbody2D _rb;
         private TrailRenderer _trailRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         [Header("Basic Movement")]
         public float speed;
@@ -21,66 +22,103 @@ namespace TheProphecy.PlayerMovement
 
 
         [Header("Dashing")]
-        [SerializeField] private float _dashingVelocity = 15f;
-        [SerializeField] float _dashingTime = 1.5f;
+        [SerializeField] private float _dashingVelocity;
+        [SerializeField] private float _dashingTime;
+        [SerializeField] private float _dashingCooldown;
+        private float _lastDashTime = 0f;
         private bool _isDashing = false;
-        private bool _canDash = true;
 
         private void Start()
         {
-            _rb = GetComponent<Rigidbody2D>();
             _trailRenderer = GetComponent<TrailRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
         {
-            Move();
-            RotateFaceWithJoystick();
+            if (!_isDashing)
+            {
+                Move();
+                RotateCharacterWhenMove();
+            }
+
+            DashController();
 
         }
 
         private void Move()
         {
-            _movement.x = _joystick.Horizontal * speed;
-            _movement.y = _joystick.Vertical * speed;
+            _movement.x = _joystick.Horizontal;
+            _movement.y = _joystick.Vertical;
 
-            transform.Translate(_movement * Time.deltaTime);
+            transform.Translate(_movement * speed * Time.deltaTime);
         }
 
-        private void RotateFaceWithJoystick()
+        private void RotateCharacterWhenMove()
         {
             if (_movement.x != 0 || _movement.y != 0)
             {
                 direction = _joystick.Direction;
+
                 float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), direction);
                 _center.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
+
+                if (_movement.x < 0)
+                {
+                    _spriteRenderer.flipX = true;
+                }
+
+                else if(_movement.x > 0)
+                {
+                    _spriteRenderer.flipX = false;
+                }
             }
+            
         }
 
-        public void Dash()
+        public void DashWhenButtonClicked()
         {
-            if (!_canDash)
+            bool isDashOnCooldown = Time.time - _lastDashTime < _dashingCooldown;
+
+            if (isDashOnCooldown || _isDashing)
+            {
                 return;
-            _canDash = false;
+            }
+
+            _lastDashTime = Time.time;
             _isDashing = true;
             _trailRenderer.emitting = true;
-            StartCoroutine(StopDashing());
+        }
 
-            if (_isDashing)
+        private void DashController()
+        {
+            if (!_isDashing)
             {
-                _rb.velocity = direction * _dashingVelocity;
                 return;
             }
 
+            bool isDashFinished = Time.time - _lastDashTime > _dashingTime;
+
+            if (isDashFinished)
+            {
+                _isDashing = false;
+                _trailRenderer.emitting = false;
+            }
+
+            else
+            {
+                transform.position += new Vector3(direction.x, direction.y, 0) * _dashingVelocity * Time.deltaTime;
+            }
         }
 
-
-        private IEnumerator StopDashing()
+        public void GetRemainingCooldownTimeAsPercentage()
         {
-            yield return new WaitForSeconds(_dashingTime);
-            _trailRenderer.emitting = false;
-            _isDashing = false;
-            _canDash = true;
+            Mathf.Clamp((Time.time - _lastDashTime) / _dashingCooldown, 0, 1);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Debug.DrawLine(transform.position, transform.position + new Vector3(direction.x, direction.y, 0) * 5);
         }
     }
 }
