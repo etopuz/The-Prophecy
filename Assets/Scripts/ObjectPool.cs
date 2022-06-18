@@ -7,11 +7,14 @@ namespace TheProphecy
     public class ObjectPool 
     {
         private GameObject _prefab;
+        private GameObject _container;
+
         private Stack<GameObject> _objectPool = new Stack<GameObject>();
 
-        public ObjectPool(GameObject prefab)
+        public ObjectPool(GameObject prefab, GameObject container)
         {
-            this._prefab = prefab;
+            _prefab = prefab;
+            _container = container;
         }
 
         public void FillThePool(int count)
@@ -19,6 +22,7 @@ namespace TheProphecy
             for (int i = 0; i < count; i++)
             {
                 GameObject object_ = Object.Instantiate(_prefab);
+                object_.transform.parent = _container.transform;
                 AddToPool(object_);
             }
         }
