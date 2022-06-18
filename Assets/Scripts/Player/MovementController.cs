@@ -11,8 +11,10 @@ namespace TheProphecy.PlayerMovement
         [Header("References")]
         [SerializeField] private Joystick _joystick;
         [SerializeField] private GameObject _center;
+        [SerializeField] private GameObject _canvas;
         private TrailRenderer _trailRenderer;
         private SpriteRenderer _spriteRenderer;
+        private UIController _uIController;
 
         [Header("Basic Movement")]
         public float speed;
@@ -31,6 +33,7 @@ namespace TheProphecy.PlayerMovement
         {
             _trailRenderer = GetComponent<TrailRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _uIController = _canvas.GetComponent<UIController>();
         }
 
         private void Update()
@@ -41,6 +44,7 @@ namespace TheProphecy.PlayerMovement
                 RotateCharacterWhenMove();
             }
 
+            ShowDashCooldownInUI();
             DashController();
 
         }
@@ -110,9 +114,9 @@ namespace TheProphecy.PlayerMovement
             }
         }
 
-        public void GetRemainingCooldownTimeAsPercentage()
+        public void ShowDashCooldownInUI()
         {
-            Mathf.Clamp((Time.time - _lastDashTime) / _dashingCooldown, 0, 1);
+            _uIController.ControlDashButton(Mathf.Clamp((Time.time - _lastDashTime) / _dashingCooldown, 0, 1));
         }
 
         private void OnDrawGizmos()
