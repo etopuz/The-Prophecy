@@ -26,6 +26,7 @@ namespace TheProphecy.PlayerMovement
         [SerializeField] private float _dashingVelocity;
         [SerializeField] private float _dashingTime;
         [SerializeField] private float _dashingCooldown;
+        private bool _isDashOnCooldown;
         private float _lastDashTime = 0f;
         private bool _isDashing = false;
 
@@ -34,6 +35,7 @@ namespace TheProphecy.PlayerMovement
             _trailRenderer = GetComponent<TrailRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _uIController = _canvas.GetComponent<UIController>();
+
         }
 
         private void Update()
@@ -81,9 +83,9 @@ namespace TheProphecy.PlayerMovement
 
         public void DashWhenButtonClicked()
         {
-            bool isDashOnCooldown = Time.time - _lastDashTime < _dashingCooldown;
+            
 
-            if (isDashOnCooldown || _isDashing)
+            if (_isDashOnCooldown || _isDashing)
             {
                 return;
             }
@@ -95,6 +97,8 @@ namespace TheProphecy.PlayerMovement
 
         private void DashController()
         {
+            _isDashOnCooldown = _lastDashTime == 0f ? false : Time.time - _lastDashTime < _dashingCooldown;
+
             if (!_isDashing)
             {
                 return;
@@ -116,7 +120,18 @@ namespace TheProphecy.PlayerMovement
 
         public void ShowDashCooldownInUI()
         {
-            _uIController.ControlDashButton(Mathf.Clamp((Time.time - _lastDashTime) / _dashingCooldown, 0, 1));
+            float percentage = (Time.time - _lastDashTime) / _dashingCooldown;
+
+            if (!_isDashOnCooldown)
+            {
+                _uIController.ControlDashButton(1f);
+            }
+            else
+            {
+                _uIController.ControlDashButton(percentage);
+            }
+
+            
         }
 
         private void OnDrawGizmos()
