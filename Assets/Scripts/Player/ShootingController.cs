@@ -6,15 +6,15 @@ namespace TheProphecy.PlayerCombat
 {
     public class ShootingController : MonoBehaviour
     {
-
         private ObjectPool _pool;
         private MovementController _movementController;
+        private static float _bulletLifeTime = 2.2f;
 
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private GameObject _projectileContainer;
 
         [SerializeField] private float _bulletSpeed = 25f;
-        private float _bulletLifeTime = 2.2f;
+        
 
         // private float _bulletSize = 1f;
         // private int _bulletCount = 1;

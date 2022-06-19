@@ -6,20 +6,14 @@ namespace TheProphecy
     public class EnemyHits : MonoBehaviour
     {
 
-        private int _health = 5;
+        private int _health = 500;
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        public void TakeDamage(int damage)
         {
-            if (collision.gameObject.CompareTag(TagLayerData.BULLET))
-            {
+            _health -= damage;
 
-                collision.gameObject.SetActive(false);
-
-                _health -= 1;
-
-                if (_health < 1)
-                    gameObject.SetActive(false);
-            }
+            if (_health < 1)
+                gameObject.SetActive(false);
         }
     }
 }
