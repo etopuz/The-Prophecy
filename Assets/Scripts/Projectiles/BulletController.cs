@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TheProphecy.Enemy;
 
-namespace TheProphecy.Projectile
+namespace TheProphecy.Projectiles
 {
     public class BulletController : MonoBehaviour
     {

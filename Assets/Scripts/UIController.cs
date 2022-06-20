@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+namespace TheProphecy
 {
-    [SerializeField] private Button _dashButton;
-    
-    public void ControlDashButton(float fillPercentage)
+    public class UIController : MonoBehaviour
     {
-        _dashButton.image.fillAmount = fillPercentage;
+        [SerializeField] private Button _dashButton;
+
+        public void ControlDashButton(float fillPercentage)
+        {
+            _dashButton.image.fillAmount = fillPercentage;
+        }
     }
+
 }

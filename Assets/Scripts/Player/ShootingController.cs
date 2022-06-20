@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using TheProphecy.PlayerMovement;
+using TheProphecy.Player;
 
-namespace TheProphecy.PlayerCombat
+namespace TheProphecy.Player
 {
     public class ShootingController : MonoBehaviour
     {

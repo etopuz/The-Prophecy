@@ -1,12 +1,12 @@
 using UnityEngine;
 
 
-namespace TheProphecy
+namespace TheProphecy.Enemy
 {
     public class EnemyHits : MonoBehaviour
     {
 
-        private int _health = 500;
+        private int _health = 5;
 
         public void TakeDamage(int damage)
         {
