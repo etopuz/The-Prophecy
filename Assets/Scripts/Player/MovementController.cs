@@ -40,11 +40,7 @@ namespace TheProphecy.Player
 
         private void Update()
         {
-
-
             ShowDashCooldownInUI();
-            DashController();
-
         }
 
         private void FixedUpdate()
@@ -54,6 +50,8 @@ namespace TheProphecy.Player
                 Move();
                 RotateCharacterWhenMove();
             }
+
+            DashController();
         }
 
         private void Move()
