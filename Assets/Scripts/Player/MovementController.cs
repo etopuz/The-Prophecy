@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.PlayerMovement
+namespace TheProphecy.Player
 {
     public class MovementController : MonoBehaviour
     {
@@ -40,15 +40,20 @@ namespace TheProphecy.PlayerMovement
 
         private void Update()
         {
+
+
+            ShowDashCooldownInUI();
+            DashController();
+
+        }
+
+        private void FixedUpdate()
+        {
             if (!_isDashing)
             {
                 Move();
                 RotateCharacterWhenMove();
             }
-
-            ShowDashCooldownInUI();
-            DashController();
-
         }
 
         private void Move()
