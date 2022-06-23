@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.Grid
+namespace TheProphecy.Grid 
 {
-    public class Node
+    public class Node: IHeapItem<Node>
     {
         public bool walkable;
         public Vector3 worldPosition;
@@ -15,6 +15,7 @@ namespace TheProphecy.Grid
         public int hCost;
 
         public Node parent;
+        private int _heapIndex;
 
         public Node(bool walkable, Vector3 worldPosition, int x, int y)
         {
@@ -30,6 +31,29 @@ namespace TheProphecy.Grid
             {
                 return gCost + hCost;
             }
+        }
+
+        public int HeapIndex
+        {
+            get
+            {
+                return _heapIndex;
+            }
+            set
+            {
+                _heapIndex = value;
+            }
+        }
+
+        public int CompareTo(Node nodeToCompare)
+        {
+            int compare = fCost.CompareTo(nodeToCompare.fCost);
+            if(compare == 0)
+            {
+                compare = hCost.CompareTo(nodeToCompare.hCost);
+            }
+
+            return -compare;
         }
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace TheProphecy.Grid
@@ -14,12 +12,20 @@ namespace TheProphecy.Grid
         private float _nodeDiameter;
         private int _gridSizeX, _gridSizeY;
 
-        private void Start()
+        private void Awake()
         {
             _nodeDiameter = _nodeRadius * 2;
             _gridSizeX = Mathf.RoundToInt(_gridWorldSize.x / _nodeDiameter);
             _gridSizeY = Mathf.RoundToInt(_gridWorldSize.y / _nodeDiameter);
             CreateGrid();
+        }
+
+        public int MaxSize
+        {
+            get
+            {
+                return _gridSizeX * _gridSizeY;
+            }
         }
 
         private void CreateGrid()
@@ -61,11 +67,25 @@ namespace TheProphecy.Grid
 
                     bool isValidNode = checkX >= 0 && checkX < _gridSizeX && checkY >= 0 && checkY < _gridSizeY;
 
+                    bool isDiagonalNeighboor = Mathf.Abs(x) == Mathf.Abs(y);
+
+
                     if (isValidNode)
                     {
-                        neighbours.Add(_grid[checkX, checkY]);
-                    }
+                        if (isDiagonalNeighboor)
+                        {
+                            if ((_grid[node.gridX + x, node.gridY].walkable || _grid[node.gridX, node.gridY + y].walkable))
+                            {
+                                neighbours.Add(_grid[checkX, checkY]);
+                            }
+                        }
 
+                        else
+                        {
+                            neighbours.Add(_grid[checkX, checkY]);
+                        }
+
+                    }
                 }
             }
 
@@ -83,30 +103,20 @@ namespace TheProphecy.Grid
             return _grid[x, y];
         }
 
-
         public List<Node> path;
         void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(transform.position, new Vector2(_gridWorldSize.x, _gridWorldSize.y));
-            if (_grid != null)
+            Gizmos.DrawWireCube(transform.position, new Vector3(_gridWorldSize.x, 1, _gridWorldSize.y));
+
+            if (path != null)
             {
-                foreach (Node n in _grid)
+                foreach (Node n in path)
                 {
-                    Gizmos.color = Color.red;
-
-                    if (n.walkable)
-                    {
-                        Gizmos.color = Color.white;
-                    }
-
-                    if (path != null && path.Contains(n))
-                    {
-                        Gizmos.color = Color.black;
-                    }
-
+                    Gizmos.color = Color.black;
                     Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
                 }
             }
+
         }
     }
 }
