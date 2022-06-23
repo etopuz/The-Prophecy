@@ -1,117 +1,93 @@
 using System;
 using System.Collections;
+using TheProphecy.Grid;
 using UnityEngine;
 
 namespace TheProphecy.Enemy
 {
     public class EnemyMovementAI : MonoBehaviour
     {
-        const float minPathUpdateTime = 0.3f;
-        const float pathUpdateMoveThreshold = 0.5f;
+        [SerializeField] private Transform target;
+        private Pathfinding _pathfinding;
 
-        public Transform target;
-        Vector3 moveDirection;
+        Vector3 oldTargetPosition;
 
-        public float speed = 100;
-        public float turnSpeed = 3;
-        public float turnDst = 5;
-        public float stoppingDst = 10;
+        private const float _PATH_UPDATE_TIME = 0.07f;
+        private float _pathUpdateTimer = 0f;
 
-        Path path;
+        private int _currentCheckPointIndex = 0;
+        private float _speed = 10;
+
+        void Awake()
+        {
+            _pathfinding = GetComponent<Pathfinding>();
+        }
 
         void Start()
         {
-            StartCoroutine(UpdatePath());
+            _pathfinding.FindPath(transform.position, target.position);
+            oldTargetPosition = target.position;
         }
 
-        IEnumerator UpdatePath()
+        private void Update()
         {
+            UpdatePath();
+        }
 
-            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        private void FixedUpdate()
+        {
+            FollowPath();
+        }
 
-            float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
-            Vector3 targetPosOld = target.position;
-
-            while (true)
+        private void UpdatePath()
+        {
+            if (_pathUpdateTimer < _PATH_UPDATE_TIME)
             {
-                yield return new WaitForSeconds(minPathUpdateTime);
-                if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+                _pathUpdateTimer += Time.deltaTime;
+            }
+
+            else
+            {
+                _pathUpdateTimer = 0f;
+
+                CustomGrid grid = _pathfinding.Grid;
+                Node targetNode = grid.NodeFromWorldPoint(target.position);
+                Node oldTargetNode = grid.NodeFromWorldPoint(oldTargetPosition);
+
+                if (!(targetNode.Equals(oldTargetNode)))
                 {
-                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-                    targetPosOld = target.position;
+                    _pathfinding.FindPath(transform.position, target.position);
+                    oldTargetPosition = target.position;
+                    _currentCheckPointIndex = 0;
                 }
             }
         }
 
-        public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
+        private void FollowPath()
         {
-            if (pathSuccessful)
+            if(_currentCheckPointIndex < _pathfinding.waypoints.Length)
             {
-                path = new Path(waypoints, transform.position, turnDst, stoppingDst);
+                CustomGrid grid = _pathfinding.Grid;
+                Node currentTransformNode = grid.NodeFromWorldPoint(transform.position);
+                Node nextWaypointNode = grid.NodeFromWorldPoint(_pathfinding.waypoints[_currentCheckPointIndex]);
 
-                
-                StopCoroutine("FollowPath");
-                StartCoroutine("FollowPath");
-            }
-        }
-
-
-        IEnumerator FollowPath()
-        {
-            bool followingPath = true;
-            int pathIndex = 0;
-            float speedPercent = 1;
-
-            while (followingPath)
-            {
-                Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
-                while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
-                {
-                    if (pathIndex == path.finishLineIndex)
-                    {
-                        followingPath = false;
-                        break;
-                    }
-
-                    else
-                    {
-                        pathIndex++;
-                    }
+                if ((currentTransformNode.Equals(nextWaypointNode))){
+                    _currentCheckPointIndex++;
                 }
 
-                if (followingPath)
+                if (_currentCheckPointIndex < _pathfinding.waypoints.Length)
                 {
-
-                    if (pathIndex >= path.slowDownIndex && stoppingDst > 0)
-                    {
-                        speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDst);
-                        if (speedPercent < 0.01f)
-                        {
-                            followingPath = false;
-                        }
-                    }
-
-                    moveDirection = (path.lookPoints[pathIndex] - transform.position).normalized;
-
-                    Debug.DrawLine(transform.position, transform.position + moveDirection);
-
-                    transform.Translate(moveDirection * Time.deltaTime * speed * speedPercent, Space.Self);
+                    Vector3 moveDirection = (_pathfinding.waypoints[_currentCheckPointIndex] - transform.position).normalized;
+                    transform.Translate(moveDirection * Time.deltaTime * _speed);
                 }
 
-                yield return null;
-
             }
-
         }
 
 
         private void OnDrawGizmos()
         {
-
-            if (path != null)
-            {
-                path.DrawWithGizmos();
-            }
+            _pathfinding.OnDrawGizmos();
         }
     }
 

@@ -74,7 +74,7 @@ namespace TheProphecy.Grid
                     {
                         if (isDiagonalNeighboor)
                         {
-                            if ((_grid[node.gridX + x, node.gridY].walkable || _grid[node.gridX, node.gridY + y].walkable))
+                            if (_grid[node.gridX + x, node.gridY].walkable && _grid[node.gridX, node.gridY + y].walkable)
                             {
                                 neighbours.Add(_grid[checkX, checkY]);
                             }
@@ -106,16 +106,15 @@ namespace TheProphecy.Grid
         public List<Node> path;
         void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(transform.position, new Vector3(_gridWorldSize.x, 1, _gridWorldSize.y));
+            Gizmos.DrawCube(transform.position, new Vector3(_gridWorldSize.x, 1, _gridWorldSize.y));
 
-            if (path != null)
+
+            foreach (Node n in path)
             {
-                foreach (Node n in path)
-                {
-                    Gizmos.color = Color.black;
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
-                }
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
             }
+
 
         }
     }
