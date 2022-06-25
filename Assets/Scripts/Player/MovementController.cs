@@ -51,7 +51,7 @@ namespace TheProphecy.Player
                 RotateCharacterWhenMove();
             }
 
-            DashController();
+            Dash();
         }
 
         private void Move()
@@ -84,10 +84,8 @@ namespace TheProphecy.Player
             
         }
 
-        public void DashWhenButtonClicked()
+        public void OnDashButtonPressed()
         {
-            
-
             if (_isDashOnCooldown || _isDashing)
             {
                 return;
@@ -98,7 +96,7 @@ namespace TheProphecy.Player
             _trailRenderer.emitting = true;
         }
 
-        private void DashController()
+        private void Dash()
         {
             _isDashOnCooldown = _lastDashTime == 0f ? false : Time.time - _lastDashTime < _dashingCooldown;
 
@@ -127,19 +125,14 @@ namespace TheProphecy.Player
 
             if (!_isDashOnCooldown)
             {
-                _uIController.ControlDashButton(1f);
+                _uIController.OnDashButtonPressed(1f);
             }
             else
             {
-                _uIController.ControlDashButton(percentage);
+                _uIController.OnDashButtonPressed(percentage);
             }
 
             
-        }
-
-        private void OnDrawGizmos()
-        {
-            Debug.DrawLine(transform.position, transform.position + new Vector3(direction.x, direction.y, 0) * 5);
         }
     }
 }

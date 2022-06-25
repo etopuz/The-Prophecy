@@ -6,7 +6,7 @@ namespace TheProphecy.Player
 {
     public class ShootingController : MonoBehaviour
     {
-        private ObjectPool _pool;
+        public static ObjectPool _pool;
         private MovementController _movementController;
         private static float _bulletLifeTime = 2.2f;
 
