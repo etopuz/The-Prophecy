@@ -16,8 +16,8 @@ TagManager:
   - Player
   - Enemy
   - Bullet
-  - Obstacle
   - Unwalkable
+  - 
   - 
   - 
   - 
