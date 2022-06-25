@@ -88,7 +88,6 @@ namespace TheProphecy.Enemy
             {
                 _pathfinding.OnDrawGizmos();
             }
-            
         }
     }
 
