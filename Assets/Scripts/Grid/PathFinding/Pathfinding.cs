@@ -20,7 +20,7 @@ namespace TheProphecy.Grid
 
         public void FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            Vector3[] waypoints = new Vector3[0];
+            waypoints = new Vector3[0];
             bool pathSucces = false;
 
             Node startNode = _grid.NodeFromWorldPoint(startPos);
@@ -28,7 +28,7 @@ namespace TheProphecy.Grid
 
             startNode.parent = startNode;
 
-            if (targetNode.walkable /*&& startNode.walkable*/)
+            if (targetNode.walkable)
             {
                 Heap<Node> openSet = new Heap<Node>(_grid.MaxSize);
                 HashSet<Node> closedSet = new HashSet<Node>();
@@ -98,14 +98,13 @@ namespace TheProphecy.Grid
             }
 
             _grid.path = path;
-            Vector3[] waypoints = SimplifyPath(path);
+            waypoints = SimplifyPath(path);
             Array.Reverse(waypoints);
-            this.waypoints = waypoints;
         }
 
         private Vector3[] SimplifyPath(List<Node> path)
         {
-            List<Vector3> waypoints = new List<Vector3>();
+            List<Vector3> waypointList = new List<Vector3>();
             Vector2 directionOld = Vector2.zero;
 
             for (int i = 1; i < path.Count; i++)
@@ -113,11 +112,11 @@ namespace TheProphecy.Grid
                 Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
                 if (directionNew != directionOld)
                 {
-                    waypoints.Add(path[i].worldPosition);
+                    waypointList.Add(path[i].worldPosition);
                 }
                 directionOld = directionNew;
             }
-            return waypoints.ToArray();
+            return waypointList.ToArray();
 
         }
 

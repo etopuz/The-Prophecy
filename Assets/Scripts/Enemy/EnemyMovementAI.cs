@@ -18,13 +18,10 @@ namespace TheProphecy.Enemy
         private int _currentCheckPointIndex = 0;
         private float _speed = 10;
 
-        void Awake()
-        {
-            _pathfinding = GetComponent<Pathfinding>();
-        }
 
         void Start()
         {
+            _pathfinding = GetComponent<Pathfinding>();
             _pathfinding.FindPath(transform.position, target.position);
             oldTargetPosition = target.position;
         }
@@ -87,7 +84,11 @@ namespace TheProphecy.Enemy
 
         private void OnDrawGizmos()
         {
-            _pathfinding.OnDrawGizmos();
+            if(_pathfinding != null)
+            {
+                _pathfinding.OnDrawGizmos();
+            }
+            
         }
     }
 
