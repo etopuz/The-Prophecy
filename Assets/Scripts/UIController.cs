@@ -9,7 +9,7 @@ namespace TheProphecy
     {
         [SerializeField] private Button _dashButton;
 
-        public void ControlDashButton(float fillPercentage)
+        public void OnDashButtonPressed(float fillPercentage)
         {
             _dashButton.image.fillAmount = fillPercentage;
         }
