@@ -108,14 +108,14 @@ namespace TheProphecy.Grid
         {
             Gizmos.DrawCube(transform.position, new Vector3(_gridWorldSize.x, 1, _gridWorldSize.y));
 
-
-            foreach (Node n in path)
+            if(path != null)
             {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
+                foreach (Node n in path)
+                {
+                    Gizmos.color = Color.black;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
+                }
             }
-
-
         }
     }
 }
