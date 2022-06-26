@@ -12,9 +12,9 @@ namespace TheProphecy.Projectiles
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<EnemyHits>(out EnemyHits enemyHits))
+            if (collision.TryGetComponent<BaseEnemy>(out BaseEnemy baseEnemy))
             {
-                enemyHits.TakeDamage(_damage);
+                baseEnemy.TakeDamage(_damage);
                 ShootingController._pool.AddToPool(this.gameObject);
             }
         }

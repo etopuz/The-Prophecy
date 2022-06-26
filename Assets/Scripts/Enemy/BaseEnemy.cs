@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TheProphecy.Enemy
 {
-    public class EnemyHits : MonoBehaviour
+    public class BaseEnemy : MonoBehaviour
     {
 
         private int _health = 5;
