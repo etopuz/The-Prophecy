@@ -10,7 +10,7 @@ namespace TheProphecy.Player
         
         [Header("References")]
         [SerializeField] private Joystick _joystick;
-        [SerializeField] private GameObject _center;
+        [SerializeField] private GameObject _gunHoldingPoint;
         [SerializeField] private GameObject _canvas;
         private TrailRenderer _trailRenderer;
         private SpriteRenderer _spriteRenderer;
@@ -18,7 +18,7 @@ namespace TheProphecy.Player
 
         [Header("Basic Movement")]
         public float speed;
-        public Vector2 direction = new Vector2(1, 0);
+        private Vector2 direction = new Vector2(1, 0);
         private Vector3 _movement;
 
 
@@ -29,6 +29,8 @@ namespace TheProphecy.Player
         private bool _isDashOnCooldown;
         private float _lastDashTime = 0f;
         private bool _isDashing = false;
+
+        public Vector2 Direction { get => direction; }
 
         private void Start()
         {
@@ -69,7 +71,7 @@ namespace TheProphecy.Player
                 direction = _joystick.Direction;
 
                 float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), direction);
-                _center.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
+                _gunHoldingPoint.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
 
                 if (_movement.x < 0)
                 {

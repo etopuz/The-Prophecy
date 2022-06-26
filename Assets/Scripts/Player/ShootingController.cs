@@ -32,11 +32,11 @@ namespace TheProphecy.Player
             GameObject bullet = _pool.GetFromPool();
             Rigidbody2D bullet_Rb = bullet.GetComponent<Rigidbody2D>();
 
-            float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), _movementController.direction);
+            float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), _movementController.Direction);
             bullet.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
             bullet.transform.position = transform.position;
 
-            bullet_Rb.velocity = _movementController.direction * _bulletSpeed;
+            bullet_Rb.velocity = _movementController.Direction * _bulletSpeed;
 
 
             StartCoroutine(ReturnBullet(bullet));
