@@ -8,7 +8,6 @@ namespace TheProphecy.Player
     {
         public static ObjectPool _pool;
         private MovementController _movementController;
-        private static float _bulletLifeTime = 2.2f;
 
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private GameObject _projectileContainer;
@@ -37,17 +36,6 @@ namespace TheProphecy.Player
             bullet.transform.position = transform.position;
 
             bullet_Rb.velocity = _movementController.Direction * _bulletSpeed;
-
-
-            StartCoroutine(ReturnBullet(bullet));
-        }
-
-        private IEnumerator ReturnBullet(GameObject bullet)
-        {
- 
-                yield return new WaitForSeconds(_bulletLifeTime);
-
-                _pool.AddToPool(bullet);
         }
 
     }
