@@ -14,7 +14,6 @@ namespace TheProphecy.Player
         [SerializeField] private GameObject _canvas;
         private TrailRenderer _trailRenderer;
         private SpriteRenderer _spriteRenderer;
-        private UIController _uIController;
 
         [Header("Basic Movement")]
         public float speed;
@@ -29,20 +28,21 @@ namespace TheProphecy.Player
         private bool _isDashOnCooldown;
         private float _lastDashTime = 0f;
         private bool _isDashing = false;
+        private float _dashCooldownPercentage = 1f;
 
         public Vector2 Direction { get => direction; }
+        public float DashCooldownPercentage { get => _dashCooldownPercentage;}
 
         private void Start()
         {
             _trailRenderer = GetComponent<TrailRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _uIController = _canvas.GetComponent<UIController>();
 
         }
 
         private void Update()
         {
-            ShowDashCooldownInUI();
+            CalculateDashCooldowndPercentage();
         }
 
         private void FixedUpdate()
@@ -121,20 +121,9 @@ namespace TheProphecy.Player
             }
         }
 
-        public void ShowDashCooldownInUI()
+        public void CalculateDashCooldowndPercentage()
         {
-            float percentage = (Time.time - _lastDashTime) / _dashingCooldown;
-
-            if (!_isDashOnCooldown)
-            {
-                _uIController.OnDashButtonPressed(1f);
-            }
-            else
-            {
-                _uIController.OnDashButtonPressed(percentage);
-            }
-
-            
+            _dashCooldownPercentage = (Time.time - _lastDashTime) / _dashingCooldown;
         }
     }
 }
