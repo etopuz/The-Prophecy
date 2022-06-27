@@ -14,9 +14,11 @@ namespace TheProphecy.Projectiles
         {
             if (collision.TryGetComponent<BaseEnemy>(out BaseEnemy baseEnemy))
             {
-                baseEnemy.TakeDamage(_damage);
-                ShootingController._pool.AddToPool(this.gameObject);
+               baseEnemy.TakeDamage(_damage);
+               
             }
+
+            ShootingController._pool.AddToPool(gameObject);
         }
     }
 }
