@@ -7,7 +7,10 @@ namespace TheProphecy.Enemy
 {
     public class EnemyMovementAI : MonoBehaviour
     {
-        [SerializeField] private Transform target;
+        [SerializeField] private Transform targetLeft;
+        [SerializeField] private Transform targetRight;
+        private CustomGrid _grid;
+
         private Pathfinding _pathfinding;
 
         Vector3 oldTargetPosition;
@@ -16,14 +19,15 @@ namespace TheProphecy.Enemy
         private float _pathUpdateTimer = 0f;
 
         private int _currentCheckPointIndex = 0;
-        private float _speed = 10;
+        private float _speed = 3f;
 
 
         void Start()
         {
             _pathfinding = GetComponent<Pathfinding>();
-            _pathfinding.FindPath(transform.position, target.position);
-            oldTargetPosition = target.position;
+            _pathfinding.FindPath(transform.position, targetLeft.position);
+            oldTargetPosition = targetLeft.position;
+            _grid = _pathfinding.Grid;
         }
 
         private void Update()
@@ -36,8 +40,24 @@ namespace TheProphecy.Enemy
             FollowPath();
         }
 
+        private Vector3 ChooseTargetPivotOfCharacter()
+        {
+            Node targetNodeLeft = _grid.NodeFromWorldPoint(targetLeft.position);
+            Node targetNodeRight = _grid.NodeFromWorldPoint(targetRight.position);
+
+            if (targetNodeLeft.walkable)
+            {
+                return targetLeft.position;
+            }
+
+            return targetRight.position;
+
+        }
+
         private void UpdatePath()
         {
+            Vector3 target = ChooseTargetPivotOfCharacter();
+
             if (_pathUpdateTimer < _PATH_UPDATE_TIME)
             {
                 _pathUpdateTimer += Time.deltaTime;
@@ -47,14 +67,14 @@ namespace TheProphecy.Enemy
             {
                 _pathUpdateTimer = 0f;
 
-                CustomGrid grid = _pathfinding.Grid;
-                Node targetNode = grid.NodeFromWorldPoint(target.position);
-                Node oldTargetNode = grid.NodeFromWorldPoint(oldTargetPosition);
+                
+                Node targetNode = _grid.NodeFromWorldPoint(target);
+                Node oldTargetNode = _grid.NodeFromWorldPoint(oldTargetPosition);
 
                 if (!(targetNode.Equals(oldTargetNode)))
                 {
-                    _pathfinding.FindPath(transform.position, target.position);
-                    oldTargetPosition = target.position;
+                    _pathfinding.FindPath(transform.position, target);
+                    oldTargetPosition = target;
                     _currentCheckPointIndex = 0;
                 }
             }
@@ -81,14 +101,6 @@ namespace TheProphecy.Enemy
             }
         }
 
-
-        private void OnDrawGizmos()
-        {
-            if(_pathfinding != null)
-            {
-                _pathfinding.OnDrawGizmos();
-            }
-        }
     }
 
     
