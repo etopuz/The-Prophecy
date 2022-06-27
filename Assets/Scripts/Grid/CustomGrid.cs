@@ -106,13 +106,13 @@ namespace TheProphecy.Grid
         public List<Node> path;
         void OnDrawGizmos()
         {
-            Gizmos.DrawCube(transform.position, new Vector3(_gridWorldSize.x, 1, _gridWorldSize.y));
+
 
             if(path != null)
             {
                 foreach (Node n in path)
                 {
-                    Gizmos.color = Color.black;
+                    Gizmos.color = Color.green;
                     Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
                 }
             }
