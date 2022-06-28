@@ -9,7 +9,6 @@ namespace TheProphecy
     public class UIController : MonoBehaviour
     {
         [SerializeField] private MovementController movement;
-
         [SerializeField] private Button _dashButton;
 
         private void Update()
