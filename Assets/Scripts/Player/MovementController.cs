@@ -9,15 +9,13 @@ namespace TheProphecy.Player
     {
         
         [Header("References")]
-        [SerializeField] private Joystick _joystick;
-        [SerializeField] private GameObject _gunHoldingPoint;
-        [SerializeField] private GameObject _canvas;
+        [SerializeField] private Joystick _moveJoystick;
         private TrailRenderer _trailRenderer;
         private SpriteRenderer _spriteRenderer;
 
         [Header("Basic Movement")]
         public float speed;
-        private Vector2 direction = new Vector2(1, 0);
+        private Vector2 _direction = new Vector2(1, 0);
         private Vector3 _movement;
 
 
@@ -29,20 +27,17 @@ namespace TheProphecy.Player
         private float _lastDashTime = 0f;
         private bool _isDashing = false;
         private float _dashCooldownPercentage = 1f;
-
-        public Vector2 Direction { get => direction; }
         public float DashCooldownPercentage { get => _dashCooldownPercentage;}
 
         private void Start()
         {
             _trailRenderer = GetComponent<TrailRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-
         }
 
         private void Update()
         {
-            CalculateDashCooldowndPercentage();
+            CalculateDashCooldownPercentage();
         }
 
         private void FixedUpdate()
@@ -58,8 +53,8 @@ namespace TheProphecy.Player
 
         private void Move()
         {
-            _movement.x = _joystick.Horizontal;
-            _movement.y = _joystick.Vertical;
+            _movement.x = _moveJoystick.Horizontal;
+            _movement.y = _moveJoystick.Vertical;
 
             transform.Translate(_movement * speed * Time.deltaTime);
         }
@@ -68,10 +63,7 @@ namespace TheProphecy.Player
         {
             if (_movement.x != 0 || _movement.y != 0)
             {
-                direction = _joystick.Direction;
-
-                float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), direction);
-                _gunHoldingPoint.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
+                _direction = _moveJoystick.Direction;
 
                 if (_movement.x < 0)
                 {
@@ -117,13 +109,20 @@ namespace TheProphecy.Player
 
             else
             {
-                transform.position += new Vector3(direction.x, direction.y, 0) * _dashingVelocity * Time.deltaTime;
+                transform.position += new Vector3(_direction.x, _direction.y, 0) * _dashingVelocity * Time.deltaTime;
             }
         }
 
-        public void CalculateDashCooldowndPercentage()
+        public void CalculateDashCooldownPercentage()
         {
-            _dashCooldownPercentage = (Time.time - _lastDashTime) / _dashingCooldown;
+            if (_isDashOnCooldown)
+            {
+                _dashCooldownPercentage = (Time.time - _lastDashTime) / _dashingCooldown;
+            }
+            else
+            {
+                _dashCooldownPercentage = 1f;
+            }
         }
     }
 }
