@@ -29,15 +29,18 @@ namespace TheProphecy
 
         public GameObject GetFromPool()
         {
+            GameObject object_;
             if (_objectPool.Count > 0)
             {
-                GameObject object_ = _objectPool.Pop();
+                object_ = _objectPool.Pop();
                 object_.gameObject.SetActive(true);
 
                 return object_;
             }
 
-            return Object.Instantiate(_prefab);
+            object_ = Object.Instantiate(_prefab);
+            object_.transform.parent = _container.transform;
+            return object_;
         }
 
         public void AddToPool(GameObject object_)
