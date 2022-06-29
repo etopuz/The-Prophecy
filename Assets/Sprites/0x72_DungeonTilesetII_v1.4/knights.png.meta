@@ -99,6 +99,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -724,6 +725,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      knights_2: -4763932718612708219
+      knights_19: -8576487656556911795
+      knights_7: -89904255040590431
+      knights_3: -8020104530509989356
+      knights_18: 2398575327041346118
+      knights_21: -2928622420091481427
+      knights_12: -6286512368215564626
+      knights_17: -577638049307757544
+      knights_5: -1167329996804945208
+      knights_23: -3276230243576895487
+      knights_1: 7157600387873164263
+      knights_14: 2847146871089419931
+      knights_10: -2253744577827104428
+      knights_11: 7101010022185134795
+      knights_13: -7520099061007165970
+      knights_22: 7057880041389154338
+      knights_6: -5212481768344983763
+      knights_16: -2975793422405882374
+      knights_9: 7330709617734096773
+      knights_8: -500155434779697981
+      knights_15: -5503104835754582426
+      knights_4: 8985668736610728876
+      knights_24: -2703282032163263577
+      knights_20: -664630419977609497
+      knights_0: -7972294252417677102
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
