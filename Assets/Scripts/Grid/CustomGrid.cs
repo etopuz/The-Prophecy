@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace TheProphecy.Grid
@@ -17,6 +18,12 @@ namespace TheProphecy.Grid
             _nodeDiameter = _nodeRadius * 2;
             _gridSizeX = Mathf.RoundToInt(_gridWorldSize.x / _nodeDiameter);
             _gridSizeY = Mathf.RoundToInt(_gridWorldSize.y / _nodeDiameter);
+            CreateGrid();
+        }
+
+        public IEnumerator UpdateGrid()
+        {
+            yield return new WaitForSeconds(0.2f);
             CreateGrid();
         }
 
@@ -44,7 +51,7 @@ namespace TheProphecy.Grid
                         + Vector2.right * (x * _nodeDiameter + _nodeRadius)
                         + Vector2.up * (y * _nodeDiameter + _nodeRadius);
 
-                    bool walkable = (Physics2D.OverlapCircle(worldPoint, _nodeRadius, _unWalkableMask) == null);
+                    bool walkable = (Physics2D.OverlapCircle(worldPoint, _nodeRadius - 0.1f, _unWalkableMask) == null);
                     _grid[x, y] = new Node(walkable, worldPoint, x, y);
                 }
             }
@@ -106,14 +113,29 @@ namespace TheProphecy.Grid
         public List<Node> path;
         void OnDrawGizmos()
         {
-
+            if (_grid != null)
+            {
+                foreach (Node n in _grid)
+                {
+                    if (n.walkable)
+                    {
+                        Gizmos.color = Color.white;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - 0.05f));
+                }
+            }
 
             if(path != null)
             {
                 foreach (Node n in path)
                 {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - .1f));
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (_nodeDiameter - 0.05f));
                 }
             }
         }
