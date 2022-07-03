@@ -12,6 +12,7 @@ namespace TheProphecy.Player
         [SerializeField] private Joystick _moveJoystick;
         private TrailRenderer _trailRenderer;
         private SpriteRenderer _spriteRenderer;
+        private Rigidbody2D _rigidbody;
 
         [Header("Basic Movement")]
         public float speed;
@@ -33,6 +34,7 @@ namespace TheProphecy.Player
         {
             _trailRenderer = GetComponent<TrailRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
@@ -109,7 +111,7 @@ namespace TheProphecy.Player
 
             else
             {
-                transform.position += new Vector3(_direction.x, _direction.y, 0) * _dashingVelocity * Time.deltaTime;
+                _rigidbody.MovePosition(transform.position + new Vector3(_direction.x, _direction.y, 0).normalized * _dashingVelocity * Time.deltaTime);
             }
         }
 
