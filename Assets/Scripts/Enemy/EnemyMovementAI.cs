@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using TheProphecy.Grid;
+using TheProphecy.Grid.PathFinding;
 using UnityEngine;
 
 namespace TheProphecy.Enemy
@@ -9,9 +8,12 @@ namespace TheProphecy.Enemy
     {
         [SerializeField] private Transform targetLeft;
         [SerializeField] private Transform targetRight;
-        private CustomGrid _grid;
+        [SerializeField] private Transform gridGameObject_;
 
+        private CustomGrid _grid;
         private Pathfinding _pathfinding;
+        private Vector3[] _waypoints;
+
 
         Vector3 oldTargetPosition;
 
@@ -24,8 +26,8 @@ namespace TheProphecy.Enemy
 
         void Start()
         {
-            _pathfinding = GetComponent<Pathfinding>();
-            _pathfinding.FindPath(transform.position, targetLeft.position);
+            _pathfinding = gridGameObject_.GetComponent<Pathfinding>();
+            _waypoints = _pathfinding.FindPath(transform.position, targetLeft.position);
             oldTargetPosition = targetLeft.position;
             _grid = _pathfinding.Grid;
         }
@@ -43,7 +45,6 @@ namespace TheProphecy.Enemy
         private Vector3 ChooseTargetPivotOfCharacter()
         {
             Node targetNodeLeft = _grid.NodeFromWorldPoint(targetLeft.position);
-            Node targetNodeRight = _grid.NodeFromWorldPoint(targetRight.position);
 
             if (targetNodeLeft.walkable)
             {
@@ -73,7 +74,7 @@ namespace TheProphecy.Enemy
 
                 if (!(targetNode.Equals(oldTargetNode)))
                 {
-                    _pathfinding.FindPath(transform.position, target);
+                    _waypoints = _pathfinding.FindPath(transform.position, target);
                     oldTargetPosition = target;
                     _currentCheckPointIndex = 0;
                 }
@@ -82,19 +83,18 @@ namespace TheProphecy.Enemy
 
         private void FollowPath()
         {
-            if(_currentCheckPointIndex < _pathfinding.waypoints.Length)
+            if(_currentCheckPointIndex < _waypoints.Length)
             {
-                CustomGrid grid = _pathfinding.Grid;
-                Node currentTransformNode = grid.NodeFromWorldPoint(transform.position);
-                Node nextWaypointNode = grid.NodeFromWorldPoint(_pathfinding.waypoints[_currentCheckPointIndex]);
+                Node currentTransformNode = _grid.NodeFromWorldPoint(transform.position);
+                Node nextWaypointNode = _grid.NodeFromWorldPoint(_waypoints[_currentCheckPointIndex]);
 
                 if ((currentTransformNode.Equals(nextWaypointNode))){
                     _currentCheckPointIndex++;
                 }
 
-                if (_currentCheckPointIndex < _pathfinding.waypoints.Length)
+                if (_currentCheckPointIndex < _waypoints.Length)
                 {
-                    Vector3 moveDirection = (_pathfinding.waypoints[_currentCheckPointIndex] - transform.position).normalized;
+                    Vector3 moveDirection = (_waypoints[_currentCheckPointIndex] - transform.position).normalized;
                     transform.Translate(moveDirection * Time.deltaTime * _speed);
                 }
 
