@@ -49,7 +49,7 @@ namespace TheProphecy.Player
                     GameObject bullet = _pool.GetFromPool();
                     Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-                    bulletScript.FireAndMove(_gunHoldingPoint.transform.position, _direction, directionAngle, _bulletSpeed);
+                    bulletScript.FireAndMove(_gunHoldingPoint.transform.position, _direction.normalized, directionAngle, _bulletSpeed);
 
                     _isFireOnCooldown = true;
                 }
