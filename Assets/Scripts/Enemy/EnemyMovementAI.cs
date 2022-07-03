@@ -83,12 +83,14 @@ namespace TheProphecy.Enemy
 
         private void FollowPath()
         {
-            if(_currentCheckPointIndex < _waypoints.Length)
+            if (_currentCheckPointIndex < _waypoints.Length)
             {
-                Node currentTransformNode = _grid.NodeFromWorldPoint(transform.position);
-                Node nextWaypointNode = _grid.NodeFromWorldPoint(_waypoints[_currentCheckPointIndex]);
+                CustomGrid grid = _pathfinding.Grid;
+                Node currentTransformNode = grid.NodeFromWorldPoint(transform.position);
+                Node nextWaypointNode = grid.NodeFromWorldPoint(_waypoints[_currentCheckPointIndex]);
 
-                if ((currentTransformNode.Equals(nextWaypointNode))){
+                if ((currentTransformNode.Equals(nextWaypointNode)))
+                {
                     _currentCheckPointIndex++;
                 }
 
@@ -101,6 +103,32 @@ namespace TheProphecy.Enemy
             }
         }
 
+        public void OnDrawGizmos()
+        {
+            if (_waypoints != null)
+            {
+                for (int i = 0; i < _waypoints.Length; i++)
+                {
+                    Vector3 pos = _waypoints[i];
+                    if (i < _currentCheckPointIndex)
+                    {
+                        Gizmos.color = Color.green;
+                    }
+
+                    else if (i == _currentCheckPointIndex)
+                    {
+                        Gizmos.color = Color.yellow;
+                    }
+
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                    }
+
+                    Gizmos.DrawCube(pos, Vector3.one * (0.45f));
+                }
+            }
+        }
     }
 
     
