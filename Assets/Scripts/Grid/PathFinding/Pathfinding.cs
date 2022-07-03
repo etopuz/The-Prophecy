@@ -3,24 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.Grid
+namespace TheProphecy.Grid.PathFinding
 {
     public class Pathfinding : MonoBehaviour
     {
         private CustomGrid _grid;
         public CustomGrid Grid { get => _grid; }
 
-        [SerializeField] private GameObject gridGameObject;
-        public Vector3[] waypoints;
-
         private void Awake()
         {
-            _grid = gridGameObject.GetComponent<CustomGrid>();
+            _grid = GetComponent<CustomGrid>();
         }
 
-        public void FindPath(Vector3 startPos, Vector3 targetPos)
+        public Vector3[] FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            waypoints = new Vector3[0];
+            Vector3[] waypoints = new Vector3[0];
             bool pathSucces = false;
 
             Node startNode = _grid.NodeFromWorldPoint(startPos);
@@ -78,14 +75,14 @@ namespace TheProphecy.Grid
 
             if (pathSucces)
             {
-                RetracePath(startNode, targetNode);
+                return RetracePath(startNode, targetNode);
             }
-            
+            return waypoints;
         }
 
 
 
-        private void RetracePath(Node startNode, Node endNode)
+        private Vector3[] RetracePath(Node startNode, Node endNode)
         {
             List<Node> path = new List<Node>();
             Node currentNode = endNode;
@@ -98,8 +95,9 @@ namespace TheProphecy.Grid
             }
 
             _grid.path = path;
-            waypoints = SimplifyPath(path);
+            Vector3[] waypoints = SimplifyPath(path);
             Array.Reverse(waypoints);
+            return waypoints;
         }
 
         private Vector3[] SimplifyPath(List<Node> path)
@@ -126,16 +124,6 @@ namespace TheProphecy.Grid
             int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
             return (14 * Mathf.Min(dstX, dstY) + 10 * Mathf.Abs(dstX - dstY));
-        }
-
-        public void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                Gizmos.DrawSphere(waypoints[i], 0.3f);
-            }
         }
     }
 }
