@@ -89,7 +89,8 @@ namespace TheProphecy.Enemy
                 Node currentTransformNode = grid.NodeFromWorldPoint(transform.position);
                 Node nextWaypointNode = grid.NodeFromWorldPoint(_waypoints[_currentCheckPointIndex]);
 
-                if ((currentTransformNode.Equals(nextWaypointNode)))
+                // if currentTransformNode.Equals(nextWaypointNode)
+                if ((nextWaypointNode.worldPosition - transform.position).magnitude < 0.15f)
                 {
                     _currentCheckPointIndex++;
                 }
