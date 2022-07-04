@@ -12,8 +12,8 @@ namespace TheProphecy.Grid.DungeonGeneration
         [SerializeField] private int minRoomWidth = 4, minRoomHeight = 4;
         [SerializeField] private int dungeonWidth = 20, dungeonHeigth = 20;
         [SerializeField] [Range(0, 10)] private int offset = 1;
-
         [SerializeField] private bool randomWalkRooms = false;
+        private Vector3 playerRoomPosition;
 
         protected override void RunProceduralGeneration()
         {
@@ -22,7 +22,7 @@ namespace TheProphecy.Grid.DungeonGeneration
 
         private void CreateRooms()
         {
-            List<BoundsInt> roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(
+            List<Room> roomsList = ProceduralGenerationAlgorithms.BinarySpacePartitioning(
                 new BoundsInt((Vector3Int)startPosition, new Vector3Int(dungeonWidth, dungeonHeigth, 0)),
                 minRoomWidth,
                 minRoomHeight
@@ -36,23 +36,33 @@ namespace TheProphecy.Grid.DungeonGeneration
                 floor = CreateRoomsRandomly(roomsList);
             }
 
-            foreach (BoundsInt room in roomsList)
+            for (int i = 0; i < roomsList.Count; i++)
             {
-                roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
+                Room room = roomsList[i];
+                roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.Bounds.center));
+
+                if (i == 0)
+                {
+                    room.roomType = RoomType.PLAYER_SPAWN;
+                    playerRoomPosition = room.Bounds.center;
+                }
+
             }
 
             HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
+
             floor.UnionWith(corridors);
             tilemapVisualizer.PaintFloorTiles(floor);
             WallGenerator.CreateWalls(floor, tilemapVisualizer);
         }
 
-        private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)
+        private HashSet<Vector2Int> CreateRoomsRandomly(List<Room> roomsList)
         {
             HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
             for (int i = 0; i < roomsList.Count; i++)
             {
-                BoundsInt roomBounds = roomsList[i];
+                Room room = roomsList[i];
+                BoundsInt roomBounds = room.Bounds;
                 Vector2Int roomCenter = new Vector2Int(Mathf.RoundToInt(roomBounds.center.x), Mathf.RoundToInt(roomBounds.center.y));
                 HashSet<Vector2Int> roomFloor = RunRandomWalk(randomWalkParameters, roomCenter);
 
@@ -147,23 +157,33 @@ namespace TheProphecy.Grid.DungeonGeneration
 
         }
 
-        private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+        private HashSet<Vector2Int> CreateSimpleRooms(List<Room> roomsList)
         {
             HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
-            foreach (BoundsInt room in roomsList)
+            foreach (Room room in roomsList)
             {
-                for (int col = offset; col < room.size.x - offset; col++)
+                for (int col = offset; col < room.Bounds.size.x - offset; col++)
                 {
-                    for (int row = offset; row < room.size.y - offset; row++)
+                    for (int row = offset; row < room.Bounds.size.y - offset; row++)
                     {
-                        Vector2Int position = (Vector2Int)room.min + new Vector2Int(col, row);
+                        Vector2Int position = (Vector2Int)room.Bounds.min + new Vector2Int(col, row);
                         floor.Add(position);
                     }
                 }
             }
 
             return floor;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            if (playerRoomPosition != null)
+            {
+                Gizmos.DrawSphere(playerRoomPosition, 0.5f);
+            }
+            
         }
     }
 

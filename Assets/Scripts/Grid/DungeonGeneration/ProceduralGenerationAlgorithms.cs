@@ -39,51 +39,51 @@ namespace TheProphecy.Grid.DungeonGeneration
         }
 
 
-        public static List<BoundsInt> BinarySpacePartitioning(BoundsInt spaceToSplit, int minWidth, int minHeight)
+        public static List<Room> BinarySpacePartitioning(BoundsInt spaceToSplit, int minWidth, int minHeight)
         {
             Queue<BoundsInt> roomsQueue = new Queue<BoundsInt>();
-            List<BoundsInt> roomsList = new List<BoundsInt>();
+            List<Room> roomsList = new List<Room>();
 
             roomsQueue.Enqueue(spaceToSplit);
 
             while (roomsQueue.Count > 0)
             {
-                BoundsInt room = roomsQueue.Dequeue();
-                if(room.size.y >= minHeight && room.size.x >= minWidth)
+                BoundsInt roomBounds = roomsQueue.Dequeue();
+                if(roomBounds.size.y >= minHeight && roomBounds.size.x >= minWidth)
                 {
                     if(Random.value < 0.5f)
                     {
-                        if(room.size.y >= minHeight * 2)
+                        if(roomBounds.size.y >= minHeight * 2)
                         {
-                            SplitHorizontally(minHeight, roomsQueue, room);
+                            SplitHorizontally(minHeight, roomsQueue, roomBounds);
                         }
                         
-                        else if (room.size.x >= minWidth * 2)
+                        else if (roomBounds.size.x >= minWidth * 2)
                         {
-                            SplitVertically(minWidth, roomsQueue, room);
+                            SplitVertically(minWidth, roomsQueue, roomBounds);
                         }
 
                         else
                         {
-                            roomsList.Add(room);
+                            roomsList.Add(new Room(roomBounds));
                         }
                     }
 
                     else
                     {
-                        if (room.size.x >= minWidth * 2)
+                        if (roomBounds.size.x >= minWidth * 2)
                         {
-                            SplitVertically(minWidth, roomsQueue, room);
+                            SplitVertically(minWidth, roomsQueue, roomBounds);
                         }
 
-                        else if (room.size.y >= minHeight * 2)
+                        else if (roomBounds.size.y >= minHeight * 2)
                         {
-                            SplitHorizontally( minHeight, roomsQueue, room);
+                            SplitHorizontally( minHeight, roomsQueue, roomBounds);
                         }
 
                         else
                         {
-                            roomsList.Add(room);
+                            roomsList.Add(new Room(roomBounds));
                         }
                     }
                 }
