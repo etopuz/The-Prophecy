@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace TheProphecy.Grid
 {
-    public class CustomGrid : MonoBehaviour
+    public class PathfindingGrid : MonoBehaviour
     {
         [SerializeField] private LayerMask _unWalkableMask;
         [SerializeField] private float _nodeRadius;
