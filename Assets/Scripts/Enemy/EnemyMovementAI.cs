@@ -10,7 +10,7 @@ namespace TheProphecy.Enemy
         [SerializeField] private Transform targetRight;
         [SerializeField] private Transform gridGameObject_;
 
-        private CustomGrid _grid;
+        private PathfindingGrid _grid;
         private Pathfinding _pathfinding;
         private Vector3[] _waypoints;
 
@@ -85,7 +85,7 @@ namespace TheProphecy.Enemy
         {
             if (_currentCheckPointIndex < _waypoints.Length)
             {
-                CustomGrid grid = _pathfinding.Grid;
+                PathfindingGrid grid = _pathfinding.Grid;
                 Node currentTransformNode = grid.NodeFromWorldPoint(transform.position);
                 Node nextWaypointNode = grid.NodeFromWorldPoint(_waypoints[_currentCheckPointIndex]);
 

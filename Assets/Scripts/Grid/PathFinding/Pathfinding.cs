@@ -7,12 +7,12 @@ namespace TheProphecy.Grid.PathFinding
 {
     public class Pathfinding : MonoBehaviour
     {
-        private CustomGrid _grid;
-        public CustomGrid Grid { get => _grid; }
+        private PathfindingGrid _grid;
+        public PathfindingGrid Grid { get => _grid; }
 
         private void Awake()
         {
-            _grid = GetComponent<CustomGrid>();
+            _grid = GetComponent<PathfindingGrid>();
         }
 
         public Vector3[] FindPath(Vector3 startPos, Vector3 targetPos)

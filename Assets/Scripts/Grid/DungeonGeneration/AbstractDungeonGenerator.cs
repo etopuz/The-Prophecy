@@ -9,11 +9,11 @@ namespace TheProphecy.Grid.DungeonGeneration
         [SerializeField] protected TilemapVisualizer tilemapVisualizer = null;
         [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
 
-        private CustomGrid _grid;
+        private PathfindingGrid _grid;
 
         private void Start()
         {
-            _grid = GetComponent<CustomGrid>();
+            _grid = GetComponent<PathfindingGrid>();
         }
 
         public void GenerateDungeon()
