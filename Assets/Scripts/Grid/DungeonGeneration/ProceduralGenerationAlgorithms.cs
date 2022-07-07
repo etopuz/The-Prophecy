@@ -114,7 +114,9 @@ namespace TheProphecy.Grid.DungeonGeneration
     }
 
 
-
+/// <summary>
+/// Start from up goes clockwise
+/// </summary>
     public static class Direction2D
     {
         public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
@@ -149,7 +151,7 @@ namespace TheProphecy.Grid.DungeonGeneration
 
         public static Vector2Int GetRandomCardinalDirection()
         {
-            return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];
+            return cardinalDirectionsList.ReturnRandomElement();
         }
     }
 }
