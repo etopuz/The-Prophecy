@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef724a001e69d749909312cb275c2ed, type: 3}
   m_Name: SRWParameters Medium
   m_EditorClassIdentifier: 
-  iterations: 35
-  walkLength: 20
-  startRandomlyEachIteration: 0
+  iterations: 50
+  walkLength: 15
+  startRandomlyEachIteration: 1
