@@ -38,7 +38,6 @@ namespace TheProphecy.Grid.DungeonGeneration
             return corridor;
         }
 
-
         public static List<Room> BinarySpacePartitioning(BoundsInt spaceToSplit, int minWidth, int minHeight)
         {
             Queue<BoundsInt> roomsQueue = new Queue<BoundsInt>();

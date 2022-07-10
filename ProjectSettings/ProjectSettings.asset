@@ -254,7 +254,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: "C:/Users/Eyy\xFCpEnsarTOPUZ/Documents/UnityKeystores/etopuz.keystore"
-  AndroidKeyaliasName: etopuz
+  AndroidKeyaliasName: Debug
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

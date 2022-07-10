@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SRWParameters Medium
   m_EditorClassIdentifier: 
   iterations: 50
-  walkLength: 15
-  startRandomlyEachIteration: 1
+  walkLength: 16
+  startRandomlyEachIteration: 0
