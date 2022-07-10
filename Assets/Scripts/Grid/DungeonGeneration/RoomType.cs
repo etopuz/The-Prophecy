@@ -10,6 +10,7 @@ namespace TheProphecy.Grid.DungeonGeneration
         TREASURE_ROOM,
         NORMAL_ROOM,
         BOSS_ROOM,
-        POOL_ROOM
+        POOL,
+        MARKET
     }
 }
