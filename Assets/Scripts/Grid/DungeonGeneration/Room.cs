@@ -8,20 +8,18 @@ namespace TheProphecy.Grid.DungeonGeneration
     public class Room
     {
         private BoundsInt _bounds;
-        public RoomType roomType;
+        private HashSet<Room> _neighbours = new HashSet<Room>();
 
-        private HashSet<Room> _neighbours;
+        public RoomType roomType = RoomType.NORMAL_ROOM;
 
         public bool isVisited = false;
         public int length = 0;
-
 
         public BoundsInt Bounds { get => _bounds; }
 
         public Room(BoundsInt bounds)
         {
             _bounds = bounds;
-            _neighbours = new HashSet<Room>();
         }
 
         public void AddNeihbour(Room room)

@@ -13,10 +13,11 @@ namespace TheProphecy.Grid.DungeonGeneration
         [SerializeField] private int _targetRoomCount = 13;
         [SerializeField] [Range(0, 10)] private int _offset = 1;
 
+        [SerializeField] private RoomLoader _roomLoader;
+
         private int _numberOfRoomsCreated = 1;
 
         private Room[,] _rooms;
-        private Room _bossRoom;
 
         protected override void RunProceduralGeneration()
         {
@@ -39,6 +40,8 @@ namespace TheProphecy.Grid.DungeonGeneration
 
                         HashSet<Vector2Int> corridorFloors = ConnectRooms(_rooms[i,j]);
                         floor.UnionWith(corridorFloors);
+
+                        _roomLoader.SetupRoom(_rooms[i, j]);
                     }
                 }
             }
@@ -215,9 +218,9 @@ namespace TheProphecy.Grid.DungeonGeneration
             }
 
 
-            //RoomArrangement.ArrangeRooms(_rooms, dungeonEntrancePos, filledRoomIndexes);
+            RoomArrangement.SetRoomTypes(_rooms, dungeonEntrancePos, filledRoomIndexes);
 
-            _bossRoom = RoomArrangement.FindFarestRoom(_rooms, dungeonEntrancePos, filledRoomIndexes);
+            
         }
 
         private Vector3Int GetCalculatedWorldPosition(Vector2Int position, int xOffset, int yOffset)
@@ -248,9 +251,6 @@ namespace TheProphecy.Grid.DungeonGeneration
                     }
                 }
             }
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(_bossRoom.Bounds.center + new Vector3(0, 0, 999), 1f);
         }
 
     }

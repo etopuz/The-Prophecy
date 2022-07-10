@@ -39,9 +39,9 @@ namespace TheProphecy.Grid.DungeonGeneration
             }
         }
 
-        private static void CreateBasicWalls(TilemapVisualizer tilemapVisualizer, HashSet<Vector2Int> basiWallPositions, HashSet<Vector2Int> floorPositions)
+        private static void CreateBasicWalls(TilemapVisualizer tilemapVisualizer, HashSet<Vector2Int> basicWallPositions, HashSet<Vector2Int> floorPositions)
         {
-            foreach (Vector2Int position in basiWallPositions)
+            foreach (Vector2Int position in basicWallPositions)
             {
                 string neighboursBinaryType = "";
                 foreach (Vector2Int direction in Direction2D.cardinalDirectionsList)
