@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TheProphecy.Grid.DungeonGeneration;
+using TheProphecy.Map.DungeonGeneration;
 using UnityEditor;
 using UnityEngine;
 

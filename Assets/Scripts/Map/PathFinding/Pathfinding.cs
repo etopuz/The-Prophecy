@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.Grid.PathFinding
+namespace TheProphecy.Map.PathFinding
 {
     public class Pathfinding : MonoBehaviour
     {

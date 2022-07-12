@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace TheProphecy.Grid.DungeonGeneration
+namespace TheProphecy.Map.DungeonGeneration
 {
     public class SimpleRandomWalkDungeonCreator : AbstractDungeonGenerator
     {

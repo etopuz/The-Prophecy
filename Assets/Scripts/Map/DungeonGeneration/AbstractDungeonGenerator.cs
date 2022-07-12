@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TheProphecy.Map.PathFinding;
 using UnityEngine;
 
-namespace TheProphecy.Grid.DungeonGeneration
+namespace TheProphecy.Map.DungeonGeneration
 {
     public abstract class AbstractDungeonGenerator : MonoBehaviour
     {

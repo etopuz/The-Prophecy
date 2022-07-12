@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace TheProphecy.Grid.DungeonGeneration
+namespace TheProphecy.Map.DungeonGeneration
 {
     public class TilemapVisualizer : MonoBehaviour
     {

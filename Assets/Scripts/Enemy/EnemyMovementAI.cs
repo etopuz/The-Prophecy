@@ -1,7 +1,6 @@
-using TheProphecy.Grid;
-using TheProphecy.Grid.PathFinding;
+using TheProphecy.Map.PathFinding;
 using UnityEngine;
-using TheProphecy.Grid.DungeonGeneration;
+using TheProphecy.Map.DungeonGeneration;
 
 
 namespace TheProphecy.Enemy

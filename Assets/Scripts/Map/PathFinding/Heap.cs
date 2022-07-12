@@ -1,6 +1,6 @@
 using System;
 
-namespace TheProphecy.Grid
+namespace TheProphecy.Map.PathFinding
 {
     public interface IHeapItem<T> : IComparable<T>
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.Grid 
+namespace TheProphecy.Map.PathFinding
 {
     public class Node: IHeapItem<Node>
     {

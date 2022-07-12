@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheProphecy.Grid.DungeonGeneration
+namespace TheProphecy.Map.DungeonGeneration
 {
     public enum RoomType
     {

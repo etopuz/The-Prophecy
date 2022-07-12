@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace TheProphecy.Grid.DungeonGeneration
+namespace TheProphecy.Map.DungeonGeneration
 {
     public static class ProceduralGenerationAlgorithms
     {
