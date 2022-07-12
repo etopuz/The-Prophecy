@@ -33,11 +33,16 @@ namespace TheProphecy.Player
         private void Update()
         {
             CalculateFireCooldown();
+        }
+
+        private void FixedUpdate()
+        {
             ShootProjectile();
         }
 
         public void ShootProjectile()
         {
+            int bulletInitialDegree = -90;
             if (_aimJoystick.Horizontal != 0 || _aimJoystick.Vertical != 0)
             {
                 _direction = _aimJoystick.Direction;
@@ -49,7 +54,7 @@ namespace TheProphecy.Player
                     GameObject bullet = _pool.GetFromPool();
                     Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-                    bulletScript.FireAndMove(_gunHoldingPoint.transform.position, _direction.normalized, directionAngle, _bulletSpeed);
+                    bulletScript.FireAndMove(_gunHoldingPoint.transform.position, _direction.normalized, directionAngle + bulletInitialDegree, _bulletSpeed);
 
                     _isFireOnCooldown = true;
                 }
