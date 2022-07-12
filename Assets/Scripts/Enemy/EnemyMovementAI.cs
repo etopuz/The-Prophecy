@@ -1,21 +1,24 @@
 using TheProphecy.Grid;
 using TheProphecy.Grid.PathFinding;
 using UnityEngine;
+using TheProphecy.Grid.DungeonGeneration;
+
 
 namespace TheProphecy.Enemy
 {
     public class EnemyMovementAI : MonoBehaviour
     {
-        [SerializeField] private Transform targetLeft;
-        [SerializeField] private Transform targetRight;
-        [SerializeField] private Transform gridGameObject_;
+        private AccessReferencesForAI _accessReferencesForAI;
+
+        private Transform _targetLeft;
+        private Transform _targetRight;
+        private Transform _gridGameObject;
 
         private PathfindingGrid _grid;
         private Pathfinding _pathfinding;
         private Vector3[] _waypoints;
 
-
-        Vector3 oldTargetPosition;
+        private Vector3 _oldTargetPosition;
 
         private const float _PATH_UPDATE_TIME = 0.07f;
         private float _pathUpdateTimer = 0f;
@@ -23,35 +26,56 @@ namespace TheProphecy.Enemy
         private int _currentCheckPointIndex = 0;
         private float _speed = 3f;
 
+        private float _range = 8f;
+        private bool _isInRange = false;
 
         void Start()
         {
-            _pathfinding = gridGameObject_.GetComponent<Pathfinding>();
-            _waypoints = _pathfinding.FindPath(transform.position, targetLeft.position);
-            oldTargetPosition = targetLeft.position;
+            _accessReferencesForAI = transform.GetComponentInParent<AccessReferencesForAI>();
+
+            _gridGameObject = _accessReferencesForAI.pathfindingGrid.transform;
+            _targetLeft = _accessReferencesForAI.targetLeftPivot.transform;
+            _targetRight = _accessReferencesForAI.targetRightPivot.transform;
+
+            _pathfinding = _gridGameObject.GetComponent<Pathfinding>();
+
             _grid = _pathfinding.Grid;
+            _oldTargetPosition = _targetLeft.position;
+            _waypoints = _pathfinding.FindPath(transform.position, _targetLeft.position);
+
+            _range = _gridGameObject.GetComponent<RandomWalkDungeonGenerator>().GetRoomRadius();
         }
 
         private void Update()
         {
-            UpdatePath();
+
+            _isInRange = _range > (transform.position - _targetLeft.position).magnitude;
+
+            if (_isInRange)
+            {
+                UpdatePath();
+            }
+
         }
 
         private void FixedUpdate()
         {
-            FollowPath();
+            if (_isInRange)
+            {
+                FollowPath();
+            }
         }
 
         private Vector3 ChooseTargetPivotOfCharacter()
         {
-            Node targetNodeLeft = _grid.NodeFromWorldPoint(targetLeft.position);
+            Node targetNodeLeft = _grid.NodeFromWorldPoint(_targetLeft.position);
 
             if (targetNodeLeft.walkable)
             {
-                return targetLeft.position;
+                return _targetLeft.position;
             }
 
-            return targetRight.position;
+            return _targetRight.position;
 
         }
 
@@ -70,12 +94,12 @@ namespace TheProphecy.Enemy
 
                 
                 Node targetNode = _grid.NodeFromWorldPoint(target);
-                Node oldTargetNode = _grid.NodeFromWorldPoint(oldTargetPosition);
+                Node oldTargetNode = _grid.NodeFromWorldPoint(_oldTargetPosition);
 
                 if (!(targetNode.Equals(oldTargetNode)))
                 {
                     _waypoints = _pathfinding.FindPath(transform.position, target);
-                    oldTargetPosition = target;
+                    _oldTargetPosition = target;
                     _currentCheckPointIndex = 0;
                 }
             }
