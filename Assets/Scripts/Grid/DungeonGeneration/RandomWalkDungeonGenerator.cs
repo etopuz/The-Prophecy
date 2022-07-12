@@ -29,6 +29,8 @@ namespace TheProphecy.Grid.DungeonGeneration
             RandomWalkDungeonGeneration(startPosition, _roomPartitionEdgeLength, _dungeonEdgeLength, _targetRoomCount);
             HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
+            _roomLoader.ClearBeforeGenerate();
+
             for (int i = 0; i < _rooms.GetLength(0); i++)
             {
                 for (int j = 0; j < _rooms.GetLength(1); j++)
@@ -251,6 +253,12 @@ namespace TheProphecy.Grid.DungeonGeneration
                     }
                 }
             }
+        }
+
+        public float GetRoomRadius()
+        {
+            float radius = (_roomPartitionEdgeLength - 2) / 2;
+            return Mathf.Sqrt(Mathf.Pow(radius, 2) * 2);
         }
 
     }
