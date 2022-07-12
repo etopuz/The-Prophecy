@@ -19,11 +19,11 @@ namespace TheProphecy.Grid.DungeonGeneration
                 case RoomType.TREASURE_ROOM:
                     break;
                 case RoomType.NORMAL_ROOM:
-                    SpawnAt(_basicEnemy, room.Bounds.center);
-                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.left);
-                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.right);
-                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.up);
-                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.down);
+                    SpawnAt(_basicEnemy, room.Bounds.center, _enemyContainer);
+                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.left , _enemyContainer);
+                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.right, _enemyContainer);
+                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.up, _enemyContainer);
+                    SpawnAt(_basicEnemy, room.Bounds.center + Vector3.down, _enemyContainer);
                     break;
                 case RoomType.BOSS_ROOM:
                     break;
@@ -33,6 +33,17 @@ namespace TheProphecy.Grid.DungeonGeneration
                     break;
             }
         }
+
+        public void ClearBeforeGenerate()
+        {
+            int numberOfEnemies = _enemyContainer.transform.childCount;
+
+            for (int i = numberOfEnemies - 1; i >= 0; i--)
+            {
+                DestroyImmediate(_enemyContainer.transform.GetChild(i).gameObject);
+            }
+        }
+
 
         private void SpawnAt(GameObject gameObject, Vector3 position)
         {
