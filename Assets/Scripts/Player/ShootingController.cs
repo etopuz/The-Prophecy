@@ -13,7 +13,9 @@ namespace TheProphecy.Player
         [SerializeField] private Joystick _aimJoystick;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private GameObject _projectileContainer;
-        [SerializeField] private GameObject _gunHoldingPoint;
+        [SerializeField] private GameObject _center;
+        [SerializeField] private GameObject _bow;
+
 
 
         [Header("Bullet Stats")]
@@ -47,14 +49,14 @@ namespace TheProphecy.Player
             {
                 _direction = _aimJoystick.Direction;
                 float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), _direction);
-                _gunHoldingPoint.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
+                _center.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
 
                 if (!_isFireOnCooldown)
                 {
                     GameObject bullet = _pool.GetFromPool();
                     Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-                    bulletScript.FireAndMove(_gunHoldingPoint.transform.position, _direction.normalized, directionAngle + bulletInitialDegree, _bulletSpeed);
+                    bulletScript.FireAndMove(_bow.transform.position, _direction.normalized, directionAngle + bulletInitialDegree, _bulletSpeed);
 
                     _isFireOnCooldown = true;
                 }
