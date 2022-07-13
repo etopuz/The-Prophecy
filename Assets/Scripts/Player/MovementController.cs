@@ -58,7 +58,8 @@ namespace TheProphecy.Player
             _movement.x = _moveJoystick.Horizontal;
             _movement.y = _moveJoystick.Vertical;
 
-            transform.Translate(_movement * speed * Time.deltaTime);
+            //transform.Translate(_movement * speed * Time.deltaTime);
+            _rigidbody.MovePosition(transform.position + (_movement * speed * Time.deltaTime));
         }
 
         private void RotateCharacterWhenMove()
