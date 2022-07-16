@@ -37,7 +37,7 @@ namespace TheProphecy.Enemy
                 _healthBar.enabled = true;
             }
 
-            _healthBarSlider.fillAmount = Mathf.Clamp01((float) (_health + 0.1f) / (float)MAX_HEALTH );
+            _healthBarSlider.fillAmount = Mathf.Clamp01((float)_health / (float)MAX_HEALTH );
         }
     }
 }

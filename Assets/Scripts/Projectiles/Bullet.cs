@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TheProphecy.Enemy;
 using TheProphecy.Player;
+using TheProphecy.Interfaces;
 
 namespace TheProphecy.Projectiles
 {
@@ -25,10 +26,9 @@ namespace TheProphecy.Projectiles
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<BaseEnemy>(out BaseEnemy baseEnemy))
+            if (collision.TryGetComponent<IDamageable>(out IDamageable iDamageable))
             {
-               baseEnemy.TakeDamage(_damage);
-               
+                iDamageable.OnTakeDamage(_damage);
             }
 
             ShootingController._pool.AddToPool(gameObject);
