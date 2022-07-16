@@ -12,6 +12,7 @@ namespace TheProphecy.Map.DungeonGeneration
         [SerializeField] private int _dungeonEdgeLength  = 20;
         [SerializeField] private int _targetRoomCount = 13;
         [SerializeField] [Range(0, 10)] private int _offset = 1;
+        [SerializeField] [Range(0f, 1f)] private float _specialRoomRatio = 0.2f;
 
         [SerializeField] private RoomLoader _roomLoader;
 
@@ -58,11 +59,11 @@ namespace TheProphecy.Map.DungeonGeneration
         {
             HashSet<Room> neighbours = room.GetNeighbourRooms();
             HashSet<Vector2Int> corridorFloors = new HashSet<Vector2Int>();
-            Vector2Int position = new Vector2Int(Mathf.RoundToInt(room.Bounds.center.x), Mathf.RoundToInt(room.Bounds.center.y));
+            Vector2Int position = new Vector2Int(Mathf.FloorToInt(room.Bounds.center.x), Mathf.FloorToInt(room.Bounds.center.y));
 
             foreach (Room neighbour in neighbours)
             {
-                Vector2Int destination = new Vector2Int(Mathf.RoundToInt(neighbour.Bounds.center.x), Mathf.RoundToInt(neighbour.Bounds.center.y));
+                Vector2Int destination = new Vector2Int(Mathf.FloorToInt(neighbour.Bounds.center.x), Mathf.FloorToInt(neighbour.Bounds.center.y));
 
                 if((position.x - destination.x) == 0 || (position.y - destination.y) == 0)
                 {
@@ -220,7 +221,7 @@ namespace TheProphecy.Map.DungeonGeneration
             }
 
 
-            RoomArrangement.SetRoomTypes(_rooms, dungeonEntrancePos, filledRoomIndexes);
+            RoomArrangement.SetRoomTypes(_rooms, dungeonEntrancePos, filledRoomIndexes, _specialRoomRatio);
 
             
         }

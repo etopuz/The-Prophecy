@@ -1,16 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace TheProphecy.Map.DungeonGeneration
 {
     public enum RoomType
     {
-        PLAYER_SPAWN,
-        TREASURE_ROOM,
-        NORMAL_ROOM,
-        BOSS_ROOM,
+        LOBBY = 0,
+
+        // STANDART ROOMS
+        PLAYER_SPAWN = 1,
+        NORMAL_ROOM = 2,
+        BOSS_ROOM = 3,
+
+
+        // SPECIAL ROOMS
         POOL,
-        MARKET
+        TREASURE_ROOM,
+        MINE_ROOM,
+        MARKET,
+        NPC_ROOM
+    }
+
+    public static class RoomTypeHelper
+    {
+        public static List<RoomType> GetSpecialRoomTypes()
+        {
+            List<RoomType> specialRoomTypes = new List<RoomType>();
+
+
+            foreach (RoomType roomType in Enum.GetValues(typeof(RoomType)))
+            {
+                if ((int)roomType > 3)
+                {
+                    specialRoomTypes.Add(roomType);
+                }
+                    
+            }
+
+            return specialRoomTypes;
+        }
+        
     }
 }
