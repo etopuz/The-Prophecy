@@ -1,7 +1,8 @@
 using UnityEngine;
 using TheProphecy.Interfaces;
 using UnityEngine.UI;
-using TheProphecy;
+using TheProphecy.LevelRun;
+using Random = UnityEngine.Random;
 
 namespace TheProphecy.Enemy
 {
@@ -15,6 +16,10 @@ namespace TheProphecy.Enemy
         [SerializeField] private Canvas _healthBar;
         [SerializeField] private Image _healthBarSlider;
 
+        [Header("Drop Variables")]
+        [SerializeField] private int _minCoinDropRate = 0;
+        [SerializeField] private int _maxCoinDropRate = 5;
+
         public void Start()
         {
             _health = MAX_HEALTH;
@@ -25,7 +30,10 @@ namespace TheProphecy.Enemy
             _health -= damage;
 
             if (_health < 1)
-                gameObject.SetActive(false);
+            {
+                Die();
+            }
+                
 
             UpdateHealthBar();
         }
@@ -38,6 +46,14 @@ namespace TheProphecy.Enemy
             }
 
             _healthBarSlider.fillAmount = Mathf.Clamp01((float)_health / (float)MAX_HEALTH );
+        }
+
+        private void Die()
+        {
+            gameObject.SetActive(false);
+            LevelRunStats levelStats = LevelManager.instance.levelRunStats;
+            levelStats.AddKill();
+            levelStats.AddCoins(Random.Range(_minCoinDropRate, _maxCoinDropRate));
         }
     }
 }
