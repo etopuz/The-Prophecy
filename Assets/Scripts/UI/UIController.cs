@@ -13,12 +13,12 @@ namespace TheProphecy
 
         private void Update()
         {
-            OnDashButtonPressed(movement.DashCooldownPercentage);
+            OnButtonPressed(_dashButton, movement.DashCooldownPercentage);
         }
 
-        public void OnDashButtonPressed(float fillPercentage)
+        public void OnButtonPressed(Button button, float fillPercentage)
         {
-            _dashButton.image.fillAmount = fillPercentage;
+            button.image.fillAmount = fillPercentage;
         }
     }
 
