@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TheProphecy.Player
 {
-    public class MovementController : MonoBehaviour
+    public class MovementController : MonoBehaviour, ISkill
     {
         
         [Header("References")]
@@ -28,7 +28,6 @@ namespace TheProphecy.Player
         private float _lastDashTime = 0f;
         private bool _isDashing = false;
         private float _dashCooldownPercentage = 1f;
-        public float DashCooldownPercentage { get => _dashCooldownPercentage;}
 
         private void Start()
         {
@@ -126,6 +125,11 @@ namespace TheProphecy.Player
             {
                 _dashCooldownPercentage = 1f;
             }
+        }
+
+        public float GetCooldownPercentage()
+        {
+            return _dashCooldownPercentage;
         }
     }
 }
