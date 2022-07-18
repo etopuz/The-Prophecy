@@ -9,21 +9,24 @@ namespace TheProphecy.Enemy
     {
         private AccessReferencesForAI _accessReferencesForAI;
 
-        private Transform _targetLeft;
-        private Transform _targetRight;
         private Transform _gridGameObject;
 
         private PathfindingGrid _grid;
         private Pathfinding _pathfinding;
-        private Vector3[] _waypoints;
 
+        private Transform _targetLeft;
+        private Transform _targetRight;
+
+        InvisibilityController _invisibilityController;
+
+        private Vector3[] _waypoints;
         private Vector3 _oldTargetPosition;
 
         private const float _PATH_UPDATE_TIME = 0.07f;
         private float _pathUpdateTimer = 0f;
 
         private int _currentCheckPointIndex = 0;
-        private float _speed = 3f;
+        private float _moveSpeed = 3f;
 
         private float _range = 8f;
         private bool _isInRange = false;
@@ -35,14 +38,14 @@ namespace TheProphecy.Enemy
             _gridGameObject = _accessReferencesForAI.pathfindingGrid.transform;
             _targetLeft = _accessReferencesForAI.targetLeftPivot.transform;
             _targetRight = _accessReferencesForAI.targetRightPivot.transform;
+            _invisibilityController = _accessReferencesForAI.invisibilityController;
 
             _pathfinding = _gridGameObject.GetComponent<Pathfinding>();
-
             _grid = _pathfinding.Grid;
             _oldTargetPosition = _targetLeft.position;
-            _waypoints = _pathfinding.FindPath(transform.position, _targetLeft.position);
-
             _range = _gridGameObject.GetComponent<RandomWalkDungeonGenerator>().GetRoomRadius();
+
+            _waypoints = _pathfinding.FindPath(transform.position, _targetLeft.position);
         }
 
         private void Update()
@@ -50,7 +53,7 @@ namespace TheProphecy.Enemy
 
             _isInRange = _range > (transform.position - _targetLeft.position).magnitude;
 
-            if (_isInRange)
+            if (_isInRange && !_invisibilityController._isInvisible)
             {
                 UpdatePath();
             }
@@ -59,7 +62,7 @@ namespace TheProphecy.Enemy
 
         private void FixedUpdate()
         {
-            if (_isInRange)
+            if (_isInRange && !_invisibilityController._isInvisible)
             {
                 FollowPath();
             }
@@ -121,7 +124,7 @@ namespace TheProphecy.Enemy
                 if (_currentCheckPointIndex < _waypoints.Length)
                 {
                     Vector3 moveDirection = (_waypoints[_currentCheckPointIndex] - transform.position).normalized;
-                    transform.Translate(moveDirection * Time.deltaTime * _speed);
+                    transform.Translate(moveDirection * Time.deltaTime * _moveSpeed);
                 }
 
             }

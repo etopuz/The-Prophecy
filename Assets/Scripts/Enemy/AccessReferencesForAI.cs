@@ -6,4 +6,7 @@ public class AccessReferencesForAI : Singleton<AccessReferencesForAI>
 
     public GameObject targetLeftPivot;
     public GameObject targetRightPivot;
+
+    public InvisibilityController invisibilityController;
+
 }

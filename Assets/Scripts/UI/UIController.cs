@@ -8,12 +8,20 @@ namespace TheProphecy
 {
     public class UIController : MonoBehaviour
     {
-        [SerializeField] private MovementController movement;
+
+        [Header("Controllers")]
+        [SerializeField] private MovementController _movementController;
+        [SerializeField] private InvisibilityController _invisibilityController;
+
+        [Header("Buttons")]
         [SerializeField] private Button _dashButton;
+        [SerializeField] private Button _invisibilityButton;
+
 
         private void Update()
         {
-            OnButtonPressed(_dashButton, movement.DashCooldownPercentage);
+            OnButtonPressed(_dashButton, _movementController.GetCooldownPercentage());
+            OnButtonPressed(_invisibilityButton, _invisibilityController.GetCooldownPercentage());
         }
 
         public void OnButtonPressed(Button button, float fillPercentage)

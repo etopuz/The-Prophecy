@@ -11,7 +11,7 @@ namespace TheProphecy.LevelRun
 
         public LevelRunStats levelRunStats;
 
-        private void Awake()
+        override protected void Awake()
         {
             base.Awake();
             levelRunStats = new LevelRunStats();
