@@ -10,21 +10,16 @@ namespace TheProphecy.Map.DungeonGeneration
         [SerializeField] protected TilemapVisualizer tilemapVisualizer = null;
         [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
 
-        private PathfindingGrid _grid;
-
-        private void Start()
-        {
-            _grid = GetComponent<PathfindingGrid>();
-        }
+        public PathfindingGrid grid;
 
         public void GenerateDungeon()
         {
             tilemapVisualizer.Clear();
             RunProceduralGeneration();
 
-            if (_grid)
+            if (grid)
             {
-                StartCoroutine(_grid.UpdateGrid());
+                StartCoroutine(grid.UpdateGrid());
             }
 
         }

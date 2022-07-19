@@ -9,6 +9,8 @@ namespace TheProphecy.Map.PathFinding
         [SerializeField] private float _nodeRadius;
         [SerializeField] private Vector2 _gridWorldSize;
 
+        [SerializeField] private float _updateTime = 0.2f;
+
         private Node[,] _grid;
         private float _nodeDiameter;
         private int _gridSizeX, _gridSizeY;
@@ -23,7 +25,7 @@ namespace TheProphecy.Map.PathFinding
 
         public IEnumerator UpdateGrid()
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(_updateTime);
             CreateGrid();
         }
 
