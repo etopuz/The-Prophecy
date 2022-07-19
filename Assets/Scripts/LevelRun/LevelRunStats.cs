@@ -10,7 +10,7 @@ namespace TheProphecy.LevelRun
         public LevelRunStats()
         {
             killCount = 0;
-            keyCount = 0;
+            keyCount = 10;
             coinCount = 0;
         }
 

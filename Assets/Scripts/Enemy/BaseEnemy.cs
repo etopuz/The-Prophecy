@@ -33,7 +33,6 @@ namespace TheProphecy.Enemy
             {
                 Die();
             }
-                
 
             UpdateHealthBar();
         }
