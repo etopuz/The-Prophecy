@@ -26,6 +26,7 @@ namespace TheProphecy.Map.DungeonGeneration
                     _player.transform.position = room.Bounds.center;
                     break;
                 case RoomType.TREASURE_ROOM:
+                    Spawn(_chest, room.Bounds.center, _chestContainer);
                     break;
                 case RoomType.NORMAL_ROOM:
                     Spawn(_basicEnemy, room.Bounds.center, _enemyContainer);
