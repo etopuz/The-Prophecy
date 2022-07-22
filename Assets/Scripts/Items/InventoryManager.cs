@@ -6,7 +6,8 @@ namespace TheProphecy.Items
 {
     public class InventoryManager : MonoBehaviour
     {
-        public List<ItemSO> items = new List<ItemSO>();
+
+        [SerializeField] private ItemDatabase _itemDatabase;
 
         public void Start()
         {
@@ -15,7 +16,7 @@ namespace TheProphecy.Items
 
         public void Test()
         {
-            foreach (var item in items)
+            foreach (var item in _itemDatabase.allItems)
             {
                 switch (item.itemType)
                 {
