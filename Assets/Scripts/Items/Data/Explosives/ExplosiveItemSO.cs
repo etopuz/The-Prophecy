@@ -14,10 +14,6 @@ namespace TheProphecy.Items
             itemType = ItemType.EXPLOSIVE;
         }
 
-        private void OnEnable()
-        {
-            explosionRange = Random.Range(0f, 1f);
-        }
     }
 }
 

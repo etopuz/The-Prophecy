@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3cee51c37824143b0ad0a48c1a4272, type: 3}
+  m_Name: Potion_Normal
+  m_EditorClassIdentifier: 
+  displayName: 
+  icon: {fileID: -501382506, guid: 5b99fc891ee76dc4caff37446c69a393, type: 3}
+  price: 10
+  itemType: 0
+  healthRegenAmount: 10
