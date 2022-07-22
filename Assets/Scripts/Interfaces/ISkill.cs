@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface ISkill
+namespace TheProphecy.Interfaces
 {
-    public float GetCooldownPercentage();
+    public interface ISkill
+    {
+        public float GetCooldownPercentage();
+    }
 }

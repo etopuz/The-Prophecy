@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TheProphecy.Interfaces;
 
 public class InteractionManager : MonoBehaviour
 {
