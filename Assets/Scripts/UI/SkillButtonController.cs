@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace TheProphecy
 {
-    public class UIController : MonoBehaviour
+    public class SkillButtonController : MonoBehaviour
     {
 
         [Header("Controllers")]
