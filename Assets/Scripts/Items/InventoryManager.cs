@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace TheProphecy.Items
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : Singleton<InventoryManager>
     {
 
-        [SerializeField] private ItemDatabase _itemDatabase;
+        public ItemDatabase itemDatabase;
 
         public void Start()
         {
-            Test();
+            //Test();
         }
 
         public void Test()
         {
-            foreach (var item in _itemDatabase.allItems)
+            foreach (var item in itemDatabase.allItems)
             {
                 switch (item.itemType)
                 {
