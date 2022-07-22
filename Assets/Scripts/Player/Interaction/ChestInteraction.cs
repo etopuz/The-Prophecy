@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TheProphecy.LevelRun;
 using UnityEngine;
+using TheProphecy.LevelRun;
+using TheProphecy.Items;
+using TheProphecy.Interfaces;
 
 public class ChestInteraction : MonoBehaviour, IInteractable
 {
@@ -21,11 +20,15 @@ public class ChestInteraction : MonoBehaviour, IInteractable
         LevelRunStats levelStats = LevelManager.instance.levelRunStats;
         bool canOpenChest = levelStats.TryToUseKey();
 
+        ItemDatabase itemDatabase = InventoryManager.instance.itemDatabase;
+
         if (canOpenChest)
         {
             _openedChest.enabled = true;
             _closedChest.enabled = false;
             _interactableBoxCollider.enabled = false;
+            ItemSO randomItem = itemDatabase.allItems.ReturnRandomElement();
+            Debug.Log(randomItem.itemType);
         }
     }
 }
