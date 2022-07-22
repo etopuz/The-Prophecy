@@ -3117,9 +3117,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 198
-        y: 72
-        width: 6
-        height: 10
+        y: 68
+        width: 16
+        height: 16
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3129,27 +3129,6 @@ TextureImporter:
       bones: []
       spriteID: a28a97d2f9dd4f94782c5f0ba31e6233
       internalID: -1961917124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GUI_2x_sliced_142
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 70
-        width: 6
-        height: 10
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a02eca4de395a724987fdbcff82fadc6
-      internalID: -1380611762
       vertices: []
       indices: 
       edges: []
@@ -4083,9 +4062,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 162
-        y: 16
-        width: 6
-        height: 12
+        y: 14
+        width: 16
+        height: 16
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4095,27 +4074,6 @@ TextureImporter:
       bones: []
       spriteID: 41c32a2600434c34b8eec5b150c8ee63
       internalID: 848412470
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GUI_2x_sliced_188
-      rect:
-        serializedVersion: 2
-        x: 172
-        y: 16
-        width: 6
-        height: 12
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fc0b10fcd2bb2f4abfabb646a85cfd0
-      internalID: 762540402
       vertices: []
       indices: 
       edges: []
@@ -4612,8 +4570,8 @@ TextureImporter:
       GUI_2x_sliced_33: -1757815483
       _topright: -951932836
       GUI_2x_sliced_148: 1723324651
-      GUI_2x_sliced_125: -291144090
       GUI_2x_sliced_99: -2017171357
+      GUI_2x_sliced_125: -291144090
       GUI_2x_sliced_90: -790940863
       GUI_2x_sliced_68: 434920063
       GUI_2x_sliced_117: 1740475190
