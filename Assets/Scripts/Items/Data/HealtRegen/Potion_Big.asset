@@ -16,4 +16,5 @@ MonoBehaviour:
   icon: {fileID: -222390129, guid: 5b99fc891ee76dc4caff37446c69a393, type: 3}
   price: 15
   itemType: 0
+  isStackable: 1
   healthRegenAmount: 15

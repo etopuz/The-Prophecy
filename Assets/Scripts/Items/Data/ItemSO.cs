@@ -10,6 +10,7 @@ namespace TheProphecy.Items
         public Sprite icon;
         public int price;
         public ItemType itemType;
+        public bool isStackable;
     }
 }
 

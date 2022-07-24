@@ -16,5 +16,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   price: 1
   itemType: 1
+  isStackable: 1
   damage: 1
   explosionRange: 1
