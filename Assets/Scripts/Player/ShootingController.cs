@@ -15,14 +15,18 @@ namespace TheProphecy.Player
         [SerializeField] private GameObject _projectileContainer;
         [SerializeField] private GameObject _center;
         [SerializeField] private GameObject _bow;
-
-
+        [SerializeField] private Transform _enemyContainer;
 
         [Header("Bullet Stats")]
         [SerializeField] private float _bulletSpeed = 15f;
         private const float FIRE_COOLDOWN_TIME = 0.3f;
         private float _fireCooldownTimer = 0f;
         private bool _isFireOnCooldown = false;
+
+        [Header("Auto Aim")]
+        [SerializeField] private bool _autoAim = true;
+        [SerializeField] private float _autoAimRange = 10f;
+
         // private float _bulletSize = 1f;
         // private int _bulletCount = 1;
 
@@ -48,6 +52,17 @@ namespace TheProphecy.Player
             if (_aimJoystick.Horizontal != 0 || _aimJoystick.Vertical != 0)
             {
                 _direction = _aimJoystick.Direction;
+
+                if (_autoAim)
+                {
+                    Vector2 closestPointDirection = GetClosestEnemyDirection();
+
+                    if(closestPointDirection.magnitude <= _autoAimRange)
+                    {
+                        _direction = closestPointDirection.normalized;
+                    }
+                }
+
                 float directionAngle = Vector2.SignedAngle(new Vector2(1, 0), _direction);
                 _center.transform.rotation = Quaternion.Euler(0, 0, directionAngle);
 
@@ -79,6 +94,32 @@ namespace TheProphecy.Player
                     _fireCooldownTimer += Time.deltaTime;
                 }
             }
+        }
+
+        private Vector2 GetClosestEnemyDirection()
+        {
+            Vector2 direction = new Vector2(1000f, 1000f);
+            float minDistance = float.MaxValue;
+
+            for (int i = 0; i < _enemyContainer.childCount; i++)
+            {
+                Transform child = _enemyContainer.GetChild(i).transform;
+
+                if (child.gameObject.activeSelf == false)
+                {
+                    continue;
+                }
+
+                float distance = Vector3.Distance(child.position, transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    direction = child.position - transform.position;
+                }
+            }
+
+            return direction;
         }
     }
 }
