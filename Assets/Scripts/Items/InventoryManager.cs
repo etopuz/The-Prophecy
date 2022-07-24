@@ -6,8 +6,9 @@ namespace TheProphecy.Items
 {
     public class InventoryManager : Singleton<InventoryManager>
     {
-
+        private const int INVENTORY_SIZE = 18;
         public ItemDatabase itemDatabase;
+        public List<ItemSlot> inventory = new List<ItemSlot>();
 
         public void Start()
         {
@@ -32,6 +33,21 @@ namespace TheProphecy.Items
                 }
             }
         }
+
+        public bool TryToAddItem(ItemSO item, int count = 0)
+        {
+            if(inventory.Count < INVENTORY_SIZE)
+            {
+                ItemSlot itemSlot = new ItemSlot(item, count);
+            }
+
+            else
+            {
+
+            }
+            return false;
+        }
+
     }
 
 }
