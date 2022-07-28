@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace TheProphecy.Enemy
 {
-    public class BaseEnemy : Base, IDamageable
+    public class BaseEnemy : BaseUnit, IDamageable
     {
         [Header("Drop Variables")]
         [SerializeField] private int _minCoinDropRate = 0;

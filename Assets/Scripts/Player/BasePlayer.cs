@@ -5,11 +5,12 @@ using TheProphecy.Interfaces;
 using System;
 using UnityEngine.UI;
 
-public class BasePlayer : Base, IDamageable
+public class BasePlayer : BaseUnit, IDamageable
 {
     protected override void Die()
     {
         base.Die();
         Debug.Log("Git Gud");
+        // show die screen
     }
 }
