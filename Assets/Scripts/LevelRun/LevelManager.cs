@@ -21,6 +21,7 @@ namespace TheProphecy.LevelRun
         public void ResetLevel()
         {
             levelRunStats = new LevelRunStats();
+            levelGenerator.GenerateDungeon();
         }
 
     }
