@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Base : MonoBehaviour
+public class BaseUnit : MonoBehaviour
 {
     [Header("Health Variables")]
-    [SerializeField] protected const int MAX_HEALTH = 5;
+    protected const int MAX_HEALTH = 5;
     [SerializeField] protected int health = 5;
 
     [Header("HealthBar")]
-    [SerializeField] protected Canvas healthBar;
-    [SerializeField] protected Image healthBarSlider;
+    [SerializeField] protected GameObject healthBarParent;
+    [SerializeField] protected GameObject healthBarSlider;
 
     public void Start()
     {
@@ -25,6 +25,7 @@ public class Base : MonoBehaviour
         if (health < 1)
         {
             Die();
+            health = 0;
         }
 
         UpdateHealthBar();
@@ -32,12 +33,12 @@ public class Base : MonoBehaviour
 
     protected void UpdateHealthBar()
     {
-        if (healthBar.enabled == false)
+        if (healthBarParent.activeInHierarchy == false)
         {
-            healthBar.enabled = true;
+            healthBarParent.SetActive(true);
         }
 
-        healthBarSlider.fillAmount = Mathf.Clamp01((float)health / (float)MAX_HEALTH);
+        healthBarSlider.transform.localScale = new Vector3(Mathf.Clamp01((float)health / (float)MAX_HEALTH), 1, 1);
     }
 
     protected virtual void Die()
