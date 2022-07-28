@@ -2,6 +2,7 @@ using UnityEngine;
 using TheProphecy.LevelRun;
 using TheProphecy.Items;
 using TheProphecy.Interfaces;
+using TheProphecy;
 
 public class ChestInteraction : MonoBehaviour, IInteractable
 {
@@ -9,6 +10,13 @@ public class ChestInteraction : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer _openedChest;
     [SerializeField] private SpriteRenderer _closedChest;
     [SerializeField] private BoxCollider2D _interactableBoxCollider;
+    [SerializeField] private InventorySystem _inventorySystem;
+
+    private void Start()
+    {
+        Transform player = GameObject.FindGameObjectWithTag(TagLayerData.PLAYER).transform;
+        _inventorySystem = player.GetComponent<InventorySystem>();
+    }
 
     public void OnInteract()
     {
@@ -20,7 +28,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable
         LevelRunStats levelStats = LevelManager.instance.levelRunStats;
         bool canOpenChest = levelStats.TryToUseKey();
 
-        ItemDatabase itemDatabase = InventoryManager.instance.itemDatabase;
+        ItemDatabase itemDatabase = _inventorySystem.itemDatabase;
 
         if (canOpenChest)
         {
@@ -28,7 +36,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable
             _closedChest.enabled = false;
             _interactableBoxCollider.enabled = false;
             ItemSO randomItem = itemDatabase.allItems.ReturnRandomElement();
-            Debug.Log(randomItem.itemType);
+            _inventorySystem.TryToAddItem(randomItem);
         }
     }
 }
