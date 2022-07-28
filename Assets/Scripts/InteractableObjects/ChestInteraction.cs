@@ -10,12 +10,12 @@ public class ChestInteraction : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer _openedChest;
     [SerializeField] private SpriteRenderer _closedChest;
     [SerializeField] private BoxCollider2D _interactableBoxCollider;
-    [SerializeField] private InventorySystem _inventorySystem;
+    [SerializeField] private InventoryManager _inventorySystem;
 
     private void Start()
     {
         Transform player = GameObject.FindGameObjectWithTag(TagLayerData.PLAYER).transform;
-        _inventorySystem = player.GetComponent<InventorySystem>();
+        _inventorySystem = player.GetComponent<InventoryManager>();
     }
 
     public void OnInteract()
