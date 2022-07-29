@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8431976804696403844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.5, y: -26.5, z: 0}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318821645095934778}
@@ -54,6 +54,8 @@ MonoBehaviour:
   health: 5
   healthBarParent: {fileID: 3318821645095934779}
   healthBarSlider: {fileID: 350825167075737440}
+  flashMaterial: {fileID: 2100000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
+  duration: 0
   _minCoinDropRate: 0
   _maxCoinDropRate: 5
 --- !u!114 &8431976804696403843
