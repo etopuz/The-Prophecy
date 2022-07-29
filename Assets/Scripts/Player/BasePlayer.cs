@@ -1,16 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TheProphecy.Interfaces;
 using System;
-using UnityEngine.UI;
+using TheProphecy.Interfaces;
+using UnityEngine;
 
 public class BasePlayer : BaseUnit, IDamageable
 {
+    [SerializeField] private UIController _uIController;
+
     protected override void Die()
     {
         base.Die();
-        Debug.Log("Git Gud");
-        // show die screen
+        _uIController.ToggleDeathScreen(true);
+    }
+
+    public void Resurrect()
+    {
+        health = MAX_HEALTH;
+        isAlive = true;
+        spriteRenderer.material = originalMaterial;
+        UpdateHealthBar();
     }
 }

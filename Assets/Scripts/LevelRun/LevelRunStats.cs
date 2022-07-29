@@ -14,6 +14,13 @@ namespace TheProphecy.LevelRun
             coinCount = 0;
         }
 
+        public void Reset()
+        {
+            killCount = 0;
+            keyCount = 10;
+            coinCount = 0;
+        }
+
         public void AddKey()
         {
             keyCount++;
