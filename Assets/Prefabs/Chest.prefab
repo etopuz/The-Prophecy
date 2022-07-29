@@ -183,6 +183,8 @@ MonoBehaviour:
   _openedChest: {fileID: 3081784894447044093}
   _closedChest: {fileID: 3081784894603685276}
   _interactableBoxCollider: {fileID: 1300584343472171852}
+  _inventorySystem: {fileID: 4486447502880087259, guid: f69e4e3bdfd55aa41957081e57897c81, type: 3}
+  player: {fileID: 8431976804696403846, guid: a1034e976ad23794790394d6fd34c5dd, type: 3}
 --- !u!1 &3081784894603685278
 GameObject:
   m_ObjectHideFlags: 0
