@@ -8,19 +8,31 @@ public class BaseUnit : MonoBehaviour
     [Header("Health Variables")]
     protected const int MAX_HEALTH = 5;
     [SerializeField] protected int health = 5;
+    protected bool isAlive = true;
 
     [Header("HealthBar")]
     [SerializeField] protected GameObject healthBarParent;
     [SerializeField] protected GameObject healthBarSlider;
 
+    [Header("Hit Effect")]
+    [SerializeField] protected Material flashMaterial;
+    [SerializeField] private float duration = 0.1f;
+    protected SpriteRenderer spriteRenderer;
+    protected Material originalMaterial;
+    protected Coroutine flashRoutine;
+
+
     public void Start()
     {
         health = MAX_HEALTH;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalMaterial = spriteRenderer.material;
     }
 
     public void OnTakeDamage(int damage)
     {
         health -= damage;
+        Flash();
 
         if (health < 1)
         {
@@ -43,6 +55,28 @@ public class BaseUnit : MonoBehaviour
 
     protected virtual void Die()
     {
+        StopCoroutine(flashRoutine);
         gameObject.SetActive(false);
+        isAlive = false;
+    }
+
+    public void Flash()
+    {
+        if (isAlive)
+        {
+            if (flashRoutine != null)
+            {
+                StopCoroutine(flashRoutine);
+            }
+            flashRoutine = StartCoroutine(FlashRoutine());
+        }
+    }
+
+    private IEnumerator FlashRoutine()
+    {
+        spriteRenderer.material = flashMaterial;
+        yield return new WaitForSeconds(duration);
+        spriteRenderer.material = originalMaterial;
+        flashRoutine = null;
     }
 }

@@ -3,7 +3,10 @@ guid: caecb53928df094478a588bcc95e8333
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthBarParent: {instanceID: 0}
+  - healthBarSlider: {instanceID: 0}
+  - flashMaterial: {fileID: 2100000, guid: 4beb055f07aaff244873dec698d0363e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
