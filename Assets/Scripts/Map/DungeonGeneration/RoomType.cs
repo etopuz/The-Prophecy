@@ -16,11 +16,12 @@ namespace TheProphecy.Map.DungeonGeneration
 
 
         // SPECIAL ROOMS
-        POOL,
         TREASURE_ROOM,
-        MINE_ROOM,
+
+        /* POOL,
+        MINE_ROOM,          TODO: Will be added later
         MARKET,
-        NPC_ROOM
+        NPC_ROOM */
     }
 
     public static class RoomTypeHelper

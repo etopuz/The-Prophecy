@@ -27,6 +27,10 @@ namespace TheProphecy.Map.DungeonGeneration
                     break;
                 case RoomType.TREASURE_ROOM:
                     Spawn(_chest, room.Bounds.center, _chestContainer);
+                    Spawn(_chest, room.Bounds.center + Vector3.left, _chestContainer);
+                    Spawn(_chest, room.Bounds.center + Vector3.right, _chestContainer);
+                    Spawn(_chest, room.Bounds.center + Vector3.up, _chestContainer);
+                    Spawn(_chest, room.Bounds.center + Vector3.down, _chestContainer);
                     break;
                 case RoomType.NORMAL_ROOM:
                     Spawn(_basicEnemy, room.Bounds.center, _enemyContainer);
@@ -37,10 +41,6 @@ namespace TheProphecy.Map.DungeonGeneration
                     break;
                 case RoomType.BOSS_ROOM:
                     Spawn(_boss, room.Bounds.center, _bossContainer);
-                    break;
-                case RoomType.POOL:
-                    break;
-                case RoomType.MARKET:
                     break;
             }
         }
