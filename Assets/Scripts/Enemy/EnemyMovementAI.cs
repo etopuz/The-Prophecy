@@ -7,18 +7,20 @@ namespace TheProphecy.Enemy
 {
     public class EnemyMovementAI : MonoBehaviour
     {
+        [Header("References")]
+        private SpriteRenderer _spriteRenderer;
         private AccessReferencesForAI _accessReferencesForAI;
 
         private Transform _gridGameObject;
-
         private PathfindingGrid _grid;
         private Pathfinding _pathfinding;
 
-        private Transform _targetLeft;
+        private Transform _targetLeft; // choosing 2 target points fixes bug of wrong calculation of nodes!
         private Transform _targetRight;
 
         InvisibilityController _invisibilityController;
 
+        [Header("Pathfinding")]
         private Vector3[] _waypoints;
         private Vector3 _oldTargetPosition;
 
@@ -31,8 +33,11 @@ namespace TheProphecy.Enemy
         private float _range = 8f;
         private bool _isInRange = false;
 
+
         void Start()
         {
+
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _accessReferencesForAI = transform.GetComponentInParent<AccessReferencesForAI>();
 
             _gridGameObject = _accessReferencesForAI.pathfindingGrid.transform;
@@ -125,6 +130,16 @@ namespace TheProphecy.Enemy
                 {
                     Vector3 moveDirection = (_waypoints[_currentCheckPointIndex] - transform.position).normalized;
                     transform.Translate(moveDirection * Time.deltaTime * _moveSpeed);
+
+                    if(moveDirection.x > 0f)
+                    {
+                        _spriteRenderer.flipX = false;
+                    }
+
+                    else if(moveDirection.x < 0f)
+                    {
+                        _spriteRenderer.flipX = true;
+                    }
                 }
 
             }
