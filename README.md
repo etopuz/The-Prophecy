@@ -12,7 +12,7 @@ TheProphecy is a game that you play as a cute archer lizard. Your main goal is e
 ### Download
 [Download APK for Android](https://github.com/etopuz/The-Prophecy/releases/tag/The_Prophecy_v0.2 "Second early release of the game")
 
-# Technic Details
+# Technical Details
 
 ### Version
 Unity 2021.3.5f1
